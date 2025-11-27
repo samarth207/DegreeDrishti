@@ -3,108 +3,168 @@ const coursesData = {
     masters: [
         {
             name: 'MBA',
+            fullName: 'Master of Business Administration',
             duration: '2 Years',
+            specialization: 'Management & Leadership',
+            benefit: 'High ROI Career',
             badge: 'trending'
         },
         {
             name: 'MBA (Dual Specification)',
+            fullName: 'Master of Business Administration (Dual)',
             duration: '2 Years',
+            specialization: 'Two Specializations',
+            benefit: 'Enhanced Career Options',
             badge: 'few-seats'
         },
         {
             name: 'MBA (WX)',
+            fullName: 'MBA for Working Executives',
             duration: '2 Years',
+            specialization: 'Executive Management',
+            benefit: 'Work While You Study',
             badge: 'trending'
         },
         {
             name: 'Executive MBA',
+            fullName: 'Executive Master of Business Administration',
             duration: '1 Year',
+            specialization: 'Fast-Track Program',
+            benefit: 'Quick Career Boost',
             badge: 'few-seats'
         },
         {
             name: 'MCA',
+            fullName: 'Master of Computer Applications',
             duration: '2 Years',
+            specialization: 'Software & IT',
+            benefit: 'High Demand Skills',
             badge: 'trending'
         },
         {
             name: 'MCom',
+            fullName: 'Master of Commerce',
             duration: '2 Years',
+            specialization: 'Commerce & Finance',
+            benefit: 'Accounting Excellence',
             badge: null
         },
         {
             name: 'MSc (Data Science)',
+            fullName: 'Master of Science in Data Science',
             duration: '2 Years',
+            specialization: 'AI & Analytics',
+            benefit: 'Future-Ready Career',
             badge: 'trending'
         },
         {
             name: 'MA (Journalism & Mass Communication)',
+            fullName: 'Master of Arts in Journalism',
             duration: '2 Years',
+            specialization: 'Media & Communication',
+            benefit: 'Creative Industry',
             badge: null
         },
         {
             name: 'MA (Public Policy & Governance)',
+            fullName: 'Master of Arts in Public Policy',
             duration: '2 Years',
+            specialization: 'Policy & Governance',
+            benefit: 'Social Impact Career',
             badge: 'few-seats'
         }
     ],
     bachelors: [
         {
             name: 'BBA',
+            fullName: 'Bachelor of Business Administration',
             duration: '3 Years',
+            specialization: 'Business Management',
+            benefit: 'Career Foundation',
             badge: 'trending'
         },
         {
             name: 'BCA',
+            fullName: 'Bachelor of Computer Applications',
             duration: '3 Years',
+            specialization: 'Computer Science',
+            benefit: 'Tech Career Launch',
             badge: 'trending'
         },
         {
             name: 'BCom',
+            fullName: 'Bachelor of Commerce',
             duration: '3 Years',
+            specialization: 'Commerce & Accounts',
+            benefit: 'Industry Recognition',
             badge: null
         },
         {
             name: 'BA',
+            fullName: 'Bachelor of Arts',
             duration: '3 Years',
+            specialization: 'Liberal Arts',
+            benefit: 'Diverse Opportunities',
             badge: 'few-seats'
         }
     ],
     integrated: [
         {
             name: 'BCA + MCA',
+            fullName: 'Integrated BCA + MCA Program',
             duration: '5 Years',
+            specialization: 'Complete IT Education',
+            benefit: 'Save Time & Money',
             badge: 'trending'
         },
         {
             name: 'BBA + MBA',
+            fullName: 'Integrated BBA + MBA Program',
             duration: '5 Years',
+            specialization: 'Complete Management',
+            benefit: 'Fast Track Success',
             badge: 'trending'
         },
         {
             name: 'B.Com + MBA',
+            fullName: 'Integrated B.Com + MBA Program',
             duration: '5 Years',
+            specialization: 'Commerce to Management',
+            benefit: 'Dual Advantage',
             badge: 'few-seats'
         },
         {
             name: 'B.Com + ACCA',
+            fullName: 'B.Com + ACCA Certification',
             duration: '5 Years',
+            specialization: 'Global Accounting',
+            benefit: 'International Career',
             badge: 'few-seats'
         }
     ],
     diploma: [
         {
             name: 'Diploma in Digital Marketing',
+            fullName: 'Professional Diploma in Digital Marketing',
             duration: '1 Year',
+            specialization: 'Online Marketing',
+            benefit: 'High Demand Skill',
             badge: 'trending'
         },
         {
             name: 'Diploma in Financial Management',
+            fullName: 'Professional Diploma in Finance',
             duration: '1 Year',
+            specialization: 'Financial Planning',
+            benefit: 'Quick Upskilling',
             badge: null
         },
         {
             name: 'Diploma in Business Analytics',
+            fullName: 'Professional Diploma in Analytics',
             duration: '1 Year',
+            specialization: 'Data Analytics',
+            benefit: 'Career Advancement',
             badge: 'few-seats'
         }
     ]
@@ -114,6 +174,7 @@ const coursesData = {
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
+    const dropdown = document.querySelector('.dropdown');
 
     if (hamburger) {
         hamburger.addEventListener('click', function() {
@@ -122,15 +183,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Handle dropdown on mobile
+    if (dropdown) {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        if (dropbtn) {
+            dropbtn.addEventListener('click', function(e) {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
+    }
+
     // Close menu when clicking on a link
-    const navItems = document.querySelectorAll('.nav-links a');
+    const navItems = document.querySelectorAll('.nav-links a:not(.dropbtn)');
     navItems.forEach(item => {
         item.addEventListener('click', function() {
             navLinks.classList.remove('active');
             if (hamburger) {
                 hamburger.classList.remove('active');
             }
+            if (dropdown) {
+                dropdown.classList.remove('active');
+            }
         });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+            navLinks.classList.remove('active');
+            if (hamburger) {
+                hamburger.classList.remove('active');
+            }
+            if (dropdown) {
+                dropdown.classList.remove('active');
+            }
+        }
     });
 
     // Course Category Filter
@@ -215,9 +305,21 @@ function loadCourses(category) {
                 </div>
                 <div class="course-info">
                     <h3>${course.name}</h3>
-                    <p class="course-duration">
-                        <i class="fas fa-clock"></i> ${course.duration}
-                    </p>
+                    <p class="course-full-name">${course.fullName}</p>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">⏱️</span>
+                            <span class="detail-text"><strong>Duration:</strong> ${course.duration}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💼</span>
+                            <span class="detail-text">${course.specialization}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💰</span>
+                            <span class="detail-text">${course.benefit}</span>
+                        </div>
+                    </div>
                     <div class="course-actions">
                         <button class="btn-apply-course" onclick="applyForCourse('${course.name}')">Apply Now</button>
                         <button class="btn-more-info" onclick="showMoreInfo('${course.name}')">More Info</button>
