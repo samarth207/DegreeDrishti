@@ -251,8 +251,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Application Form Submission
     const applicationForm = document.getElementById('applicationForm');
     if (applicationForm) {
-        applicationForm.addEventListener('submit', function(e) {
+        applicationForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            console.log('Form submitted! Starting processing...');
             
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
@@ -262,26 +263,62 @@ document.addEventListener('DOMContentLoaded', function() {
             const state = document.getElementById('state').value;
             const course = document.getElementById('course').value;
 
-            alert(`Thank you ${firstName} ${lastName}!\n\nYour application for ${course} has been submitted successfully.\n\nWe will contact you soon at ${email} or ${countryCode} ${phone}.`);
-            
-            applicationForm.reset();
+            console.log('Form data collected:', { firstName, lastName, email, countryCode, phone, state, course });
+
+            // Submit to Google Sheets
+            if (typeof submitToGoogleSheets === 'function') {
+                console.log('submitToGoogleSheets function found, calling it...');
+                await submitToGoogleSheets({
+                    firstName,
+                    lastName,
+                    email,
+                    countryCode,
+                    phone,
+                    state,
+                    course
+                }, 'application');
+                console.log('submitToGoogleSheets completed');
+            } else {
+                console.error('submitToGoogleSheets function NOT found!');
+            }
+
+            // Redirect to thank you page
+            console.log('Redirecting to thank you page...');
+            window.location.href = `thankyou.html?name=${encodeURIComponent(firstName + ' ' + lastName)}&course=${encodeURIComponent(course)}`;
         });
+    } else {
+        console.log('Application form not found on this page');
     }
 
     // Contact Form Submission
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const firstName = document.getElementById('contactFirstName').value;
             const lastName = document.getElementById('contactLastName').value;
             const email = document.getElementById('contactEmail').value;
+            const countryCode = document.getElementById('contactCountryCode').value;
+            const phone = document.getElementById('contactPhone').value;
             const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
 
-            alert(`Thank you ${firstName} ${lastName}!\n\nYour message regarding "${subject}" has been sent successfully.\n\nWe will reply to you at ${email} soon.`);
-            
-            contactForm.reset();
+            // Submit to Google Sheets
+            if (typeof submitToGoogleSheets === 'function') {
+                await submitToGoogleSheets({
+                    firstName,
+                    lastName,
+                    email,
+                    countryCode,
+                    phone,
+                    subject,
+                    message
+                }, 'contact');
+            }
+
+            // Redirect to thank you page
+            window.location.href = `thankyou.html?name=${encodeURIComponent(firstName + ' ' + lastName)}`;
         });
     }
 });
