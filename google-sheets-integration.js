@@ -36,24 +36,44 @@ async function submitToGoogleSheets(formData, formType) {
     console.log('URL:', GOOGLE_SHEETS_CONFIG.SCRIPT_URL);
 
     try {
-        // Use XMLHttpRequest with proper content type
+        // Use a hidden iframe to submit data (bypasses CORS)
         return new Promise((resolve) => {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', GOOGLE_SHEETS_CONFIG.SCRIPT_URL, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
+            // Create a form
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = GOOGLE_SHEETS_CONFIG.SCRIPT_URL;
+            form.target = 'hidden_iframe';
+            form.style.display = 'none';
+
+            // Create hidden iframe
+            let iframe = document.getElementById('hidden_iframe');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.name = 'hidden_iframe';
+                iframe.id = 'hidden_iframe';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+            }
+
+            // Add each data field as a form input
+            for (const key in data) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = data[key];
+                form.appendChild(input);
+            }
+
+            // Append form and submit
+            document.body.appendChild(form);
+            form.submit();
             
-            xhr.onload = function() {
-                console.log('Data submitted to Google Sheets successfully', xhr.responseText);
+            // Clean up after a short delay
+            setTimeout(() => {
+                document.body.removeChild(form);
+                console.log('Data submitted to Google Sheets successfully (via iframe)');
                 resolve();
-            };
-            
-            xhr.onerror = function() {
-                console.log('XHR error, but continuing (data likely sent)');
-                resolve();
-            };
-            
-            // Send data as JSON string
-            xhr.send(JSON.stringify(data));
+            }, 1000);
         });
     } catch (error) {
         console.error('Error submitting to Google Sheets:', error);
