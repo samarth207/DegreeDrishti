@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle form submission
     const form = document.getElementById('applicationForm');
     if (form) {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const firstName = document.getElementById('modalFirstName').value;
@@ -74,6 +74,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const phone = document.getElementById('modalPhone').value;
             const university = document.getElementById('modalUniversity').value;
             const course = document.getElementById('modalCourse').value;
+
+            // Submit to Google Sheets
+            if (typeof submitToGoogleSheets === 'function') {
+                await submitToGoogleSheets({
+                    firstName,
+                    lastName,
+                    email,
+                    countryCode,
+                    phone,
+                    course,
+                    university
+                }, 'application');
+            }
 
             // Redirect to thank you page with parameters
             const params = new URLSearchParams({

@@ -1059,7 +1059,7 @@ body {
 .comparison-table table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px;
+    min-width: 1000px;
 }
 
 .comparison-table thead {
@@ -1112,6 +1112,24 @@ body {
 
 .btn-apply-small:hover {
     background: var(--dark-blue);
+    transform: translateY(-2px);
+}
+
+.btn-website {
+    padding: 10px 20px;
+    background: var(--white);
+    color: var(--primary-blue);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-block;
+    border: 2px solid var(--primary-blue);
+}
+
+.btn-website:hover {
+    background: var(--primary-blue);
+    color: var(--white);
     transform: translateY(-2px);
 }
 
@@ -1563,6 +1581,16 @@ body {
         max-height: none;
     }
 
+    .dropdown-content a {
+        padding: 4px 20px;
+        font-size: 13px;
+    }
+
+    .dropdown-category {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
     .dropdown:hover .dropdown-content {
         display: none;
     }
@@ -1626,10 +1654,13 @@ body {
 
     .comparison-table {
         overflow-x: visible;
+        overflow: visible;
     }
 
     .comparison-table table {
         display: block;
+        min-width: unset;
+        width: 100%;
     }
 
     .comparison-table thead {
@@ -1723,25 +1754,25 @@ body {
     
     .trust-grid {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 12px;
     }
 
     .trust-item {
-        padding: 25px 20px;
+        padding: 18px 15px;
     }
 
     .trust-item i {
-        font-size: 42px;
-        margin-bottom: 12px;
+        font-size: 36px;
+        margin-bottom: 10px;
     }
 
     .trust-item h4 {
-        font-size: 26px;
-        margin-bottom: 8px;
+        font-size: 22px;
+        margin-bottom: 6px;
     }
 
     .trust-item p {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .course-cards {
