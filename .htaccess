@@ -1,0 +1,265 @@
+# =============================================================================
+# DegreeDrishti — Apache .htaccess
+# https://www.degreedrishti.com
+# =============================================================================
+
+# Disable directory listing
+Options -Indexes
+
+# +FollowSymLinks is required for mod_rewrite; wrapped separately so a
+# host restriction on this directive doesn't kill the whole file
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+</IfModule>
+
+ServerSignature Off
+
+# Default document
+DirectoryIndex index.html index.php
+
+# ── Enable Rewrite Engine ────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # ── 1. Force HTTPS ───────────────────────────────────────────────────────
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # ── 2. Force www (canonical domain) ─────────────────────────────────────
+    RewriteCond %{HTTP_HOST} !^www\. [NC]
+    RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # ── 3. Remove trailing slash (except root) ───────────────────────────────
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/$
+    RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+    # ── 4a. Redirect .html URLs → clean URL (301) ────────────────────────────
+    # Matches the raw HTTP request line so this never causes redirect loops
+    RewriteCond %{THE_REQUEST} \s/(.+?)\.html[\s?] [NC]
+    RewriteRule ^ /%1 [R=301,L]
+
+    # ── 4b. Serve clean URL from the physical .html file (internal rewrite) ──
+    # Rule 1: root-level pages  e.g. /about → about.html
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+    RewriteRule ^([^/.]+)/?$ $1.html [L]
+
+    # Rule 2: one-level sub-pages  e.g. /courses/mba → courses/mba.html
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/$1/$2.html -f
+    RewriteRule ^([^/]+)/([^/.]+)/?$ $1/$2.html [L]
+
+    # ── 5. favicon.ico → PNG favicon ─────────────────────────────────────────
+    RewriteCond %{REQUEST_URI} ^/favicon\.ico$
+    RewriteRule ^ /images/favicon.png [R=301,L]
+
+    # ── 6. Redirect del.htm → 410 Gone ───────────────────────────────────────
+    RewriteRule ^del\.htm$ - [G,L]
+
+</IfModule>
+
+# ── Security Headers ─────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Prevent MIME-type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+
+    # XSS Protection (legacy browsers)
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Referrer Policy — send full URL to same origin, only origin cross-origin
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Permissions Policy — disable unused browser features
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=()"
+
+    # HSTS — tell browsers to always use HTTPS (1 year)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # Content Security Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; frame-src 'self' https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+
+    # Remove server info headers
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+    Header unset Server
+</IfModule>
+
+# ── Protect Sensitive Files & Directories ────────────────────────────────────
+<FilesMatch "\.(env|log|sql|sh|bak|swp|orig|json|lock|config)$">
+    Require all denied
+</FilesMatch>
+
+# Block access to .htaccess itself and .git
+<FilesMatch "^\.ht">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteRule ^(\.git|\.env|composer\.lock|package\.json|package-lock\.json) - [F,L]
+</IfModule>
+
+# Protect API config file
+<Files "config.php">
+    Require all denied
+</Files>
+
+# Protect the entire api/ directory from direct browser access
+# (PHP files are still executable by the server, just not listable)
+<IfModule mod_rewrite.c>
+    RewriteRule ^api/config\.php$ - [F,L]
+    RewriteRule ^api/database_setup\.sql$ - [F,L]
+    RewriteRule ^api/test-db\.php$ - [F,L]
+</IfModule>
+
+# ── Gzip / Deflate Compression ───────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/woff
+    AddOutputFilterByType DEFLATE font/woff2
+    AddOutputFilterByType DEFLATE application/font-woff
+    AddOutputFilterByType DEFLATE application/font-woff2
+
+    # Remove browser bugs
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    Header append Vary User-Agent
+</IfModule>
+
+# ── Browser Caching (Leverage Cache-Control & Expires) ───────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Default
+    ExpiresDefault                                "access plus 1 month"
+
+    # HTML — short cache (content changes frequently)
+    ExpiresByType text/html                       "access plus 1 hour"
+
+    # CSS & JavaScript
+    ExpiresByType text/css                        "access plus 1 year"
+    ExpiresByType text/javascript                 "access plus 1 year"
+    ExpiresByType application/javascript          "access plus 1 year"
+    ExpiresByType application/x-javascript       "access plus 1 year"
+
+    # Images
+    ExpiresByType image/jpeg                      "access plus 1 year"
+    ExpiresByType image/png                       "access plus 1 year"
+    ExpiresByType image/gif                       "access plus 1 year"
+    ExpiresByType image/webp                      "access plus 1 year"
+    ExpiresByType image/svg+xml                   "access plus 1 year"
+    ExpiresByType image/x-icon                    "access plus 1 year"
+    ExpiresByType image/vnd.microsoft.icon        "access plus 1 year"
+
+    # Fonts
+    ExpiresByType font/ttf                        "access plus 1 year"
+    ExpiresByType font/otf                        "access plus 1 year"
+    ExpiresByType font/woff                       "access plus 1 year"
+    ExpiresByType font/woff2                      "access plus 1 year"
+    ExpiresByType application/font-woff           "access plus 1 year"
+    ExpiresByType application/font-woff2          "access plus 1 year"
+
+    # Data
+    ExpiresByType application/json                "access plus 0 seconds"
+    ExpiresByType application/xml                 "access plus 0 seconds"
+    ExpiresByType text/xml                        "access plus 0 seconds"
+
+    # Sitemap & robots
+    ExpiresByType application/x-web-app-manifest+json "access plus 0 seconds"
+    ExpiresByType text/cache-manifest             "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # CSS/JS — immutable when fingerprinted, 1 year otherwise
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Images & fonts
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # HTML — revalidate every visit
+    <FilesMatch "\.html$">
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# ── Custom Error Pages ───────────────────────────────────────────────────────
+ErrorDocument 400 /index.html
+ErrorDocument 401 /index.html
+ErrorDocument 403 /index.html
+ErrorDocument 404 /index.html
+ErrorDocument 500 /index.html
+
+# ── Block Bad Bots & Scrapers ────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_USER_AGENT} (AhrefsBot|MJ12bot|DotBot|SemrushBot|BLEXBot|MegaIndex|SurveyBot|serpstatbot|DataForSeoBot|Bytespider|Pinterestbot|YandexBot|PetalBot|Barkrowler|RyteBot|SEOkicks|opensiteexplorer|rogerbot|DomainCrawler|admantx|GigaBot|linkdexbot|archive\.org_bot|Scrapy|python-requests|libwww-perl|curl|wget|Go-http-client) [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# Block empty user agents
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_USER_AGENT} ^-?$
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ── Hotlink Protection (Images) ──────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https://(www\.)?degreedrishti\.com [NC]
+    RewriteCond %{HTTP_REFERER} !^https://(www\.)?google\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https://(www\.)?bing\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https://(www\.)?facebook\. [NC]
+    RewriteRule \.(jpg|jpeg|png|gif|webp|svg)$ - [F,L]
+</IfModule>
+
+# ── Charset & MIME Types ─────────────────────────────────────────────────────
+AddDefaultCharset UTF-8
+
+<IfModule mod_mime.c>
+    AddType text/html                             .html .htm
+    AddType text/css                              .css
+    AddType application/javascript                .js
+    AddType image/webp                            .webp
+    AddType image/svg+xml                         .svg
+    AddType font/woff                             .woff
+    AddType font/woff2                            .woff2
+    AddType application/vnd.ms-fontobject         .eot
+    AddType font/ttf                              .ttf
+    AddType font/otf                              .otf
+    AddType application/xml                       .xml
+    AddType text/plain                            .txt
+</IfModule>
+
+# ── ETags — disable for better caching consistency ───────────────────────────
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None
+
+# ── Keep-Alive ───────────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>

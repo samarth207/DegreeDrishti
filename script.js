@@ -1,73 +1,122 @@
+// Hero Carousel
+let currentSlideIndex = 1;
+let autoSlideInterval;
+
+// Show slide function
+function showSlide(n) {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (n > slides.length) { currentSlideIndex = 1; }
+    if (n < 1) { currentSlideIndex = slides.length; }
+    
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    slides[currentSlideIndex - 1].classList.add('active');
+    dots[currentSlideIndex - 1].classList.add('active');
+}
+
+// Change slide function
+function changeSlide(n) {
+    clearInterval(autoSlideInterval);
+    currentSlideIndex += n;
+    showSlide(currentSlideIndex);
+    startAutoSlide();
+}
+
+// Go to specific slide
+function currentSlide(n) {
+    clearInterval(autoSlideInterval);
+    currentSlideIndex = n;
+    showSlide(currentSlideIndex);
+    startAutoSlide();
+}
+
+// Auto slide function
+function startAutoSlide() {
+    autoSlideInterval = setInterval(() => {
+        currentSlideIndex++;
+        showSlide(currentSlideIndex);
+    }, 5000); // Change slide every 5 seconds
+}
+
+// Initialize carousel
+document.addEventListener('DOMContentLoaded', function() {
+    showSlide(currentSlideIndex);
+    startAutoSlide();
+});
+
 // Course Data
 const coursesData = {
     masters: [
         {
-            name: 'MBA',
-            fullName: 'Master of Business Administration',
+            name: 'Online MBA',
+            fullName: 'Online Master of Business Administration',
             duration: '2 Years',
             specialization: 'Management & Leadership',
             benefit: 'High ROI Career',
             badge: 'trending'
         },
         {
-            name: 'MBA (Dual Specification)',
-            fullName: 'Master of Business Administration (Dual)',
+            name: 'Online MBA (Dual Specification)',
+            fullName: 'Online Master of Business Administration (Dual)',
             duration: '2 Years',
             specialization: 'Two Specializations',
             benefit: 'Enhanced Career Options',
             badge: 'few-seats'
         },
         {
-            name: 'MBA (WX)',
-            fullName: 'MBA for Working Executives',
+            name: 'Online MBA (WX)',
+            fullName: 'Online MBA for Working Executives',
             duration: '2 Years',
             specialization: 'Executive Management',
             benefit: 'Work While You Study',
             badge: 'trending'
         },
         {
-            name: 'Executive MBA',
-            fullName: 'Executive Master of Business Administration',
+            name: 'Online Executive MBA',
+            fullName: 'Online Executive Master of Business Administration',
             duration: '1 Year',
             specialization: 'Fast-Track Program',
             benefit: 'Quick Career Boost',
             badge: 'few-seats'
         },
         {
-            name: 'MCA',
-            fullName: 'Master of Computer Applications',
+            name: 'Online MCA',
+            fullName: 'Online Master of Computer Applications',
             duration: '2 Years',
             specialization: 'Software & IT',
             benefit: 'High Demand Skills',
             badge: 'trending'
         },
         {
-            name: 'MCom',
-            fullName: 'Master of Commerce',
+            name: 'Online MCom',
+            fullName: 'Online Master of Commerce',
             duration: '2 Years',
             specialization: 'Commerce & Finance',
             benefit: 'Accounting Excellence',
             badge: null
         },
         {
-            name: 'MSc (Data Science)',
-            fullName: 'Master of Science in Data Science',
+            name: 'Online MSc (Data Science)',
+            fullName: 'Online Master of Science in Data Science',
             duration: '2 Years',
             specialization: 'AI & Analytics',
             benefit: 'Future-Ready Career',
             badge: 'trending'
         },
         {
-            name: 'MA (Journalism & Mass Communication)',
-            fullName: 'Master of Arts in Journalism',
+            name: 'Online MA (Journalism & Mass Communication)',
+            fullName: 'Online Master of Arts in Journalism',
             duration: '2 Years',
             specialization: 'Media & Communication',
             benefit: 'Creative Industry',
             badge: null
         },
         {
-            name: 'MA (Public Policy & Governance)',
-            fullName: 'Master of Arts in Public Policy',
+            name: 'Online MA (Public Policy & Governance)',
+            fullName: 'Online Master of Arts in Public Policy',
             duration: '2 Years',
             specialization: 'Policy & Governance',
             benefit: 'Social Impact Career',
@@ -76,32 +125,32 @@ const coursesData = {
     ],
     bachelors: [
         {
-            name: 'BBA',
-            fullName: 'Bachelor of Business Administration',
+            name: 'Online BBA',
+            fullName: 'Online Bachelor of Business Administration',
             duration: '3 Years',
             specialization: 'Business Management',
             benefit: 'Career Foundation',
             badge: 'trending'
         },
         {
-            name: 'BCA',
-            fullName: 'Bachelor of Computer Applications',
+            name: 'Online BCA',
+            fullName: 'Online Bachelor of Computer Applications',
             duration: '3 Years',
             specialization: 'Computer Science',
             benefit: 'Tech Career Launch',
             badge: 'trending'
         },
         {
-            name: 'BCom',
-            fullName: 'Bachelor of Commerce',
+            name: 'Online BCom',
+            fullName: 'Online Bachelor of Commerce',
             duration: '3 Years',
             specialization: 'Commerce & Accounts',
             benefit: 'Industry Recognition',
             badge: null
         },
         {
-            name: 'BA',
-            fullName: 'Bachelor of Arts',
+            name: 'Online BA',
+            fullName: 'Online Bachelor of Arts',
             duration: '3 Years',
             specialization: 'Liberal Arts',
             benefit: 'Diverse Opportunities',
@@ -110,32 +159,32 @@ const coursesData = {
     ],
     integrated: [
         {
-            name: 'BCA + MCA',
-            fullName: 'Integrated BCA + MCA Program',
+            name: 'Online BCA + MCA',
+            fullName: 'Online Integrated BCA + MCA Program',
             duration: '5 Years',
             specialization: 'Complete IT Education',
             benefit: 'Save Time & Money',
             badge: 'trending'
         },
         {
-            name: 'BBA + MBA',
-            fullName: 'Integrated BBA + MBA Program',
+            name: 'Online BBA + MBA',
+            fullName: 'Online Integrated BBA + MBA Program',
             duration: '5 Years',
             specialization: 'Complete Management',
             benefit: 'Fast Track Success',
             badge: 'trending'
         },
         {
-            name: 'B.Com + MBA',
-            fullName: 'Integrated B.Com + MBA Program',
+            name: 'Online B.Com + MBA',
+            fullName: 'Online Integrated B.Com + MBA Program',
             duration: '5 Years',
             specialization: 'Commerce to Management',
             benefit: 'Dual Advantage',
             badge: 'few-seats'
         },
         {
-            name: 'B.Com + ACCA',
-            fullName: 'B.Com + ACCA Certification',
+            name: 'Online B.Com + ACCA',
+            fullName: 'Online B.Com + ACCA Certification',
             duration: '5 Years',
             specialization: 'Global Accounting',
             benefit: 'International Career',
@@ -144,24 +193,24 @@ const coursesData = {
     ],
     diploma: [
         {
-            name: 'Diploma in Digital Marketing',
-            fullName: 'Professional Diploma in Digital Marketing',
+            name: 'Online Diploma in Digital Marketing',
+            fullName: 'Online Professional Diploma in Digital Marketing',
             duration: '1 Year',
             specialization: 'Online Marketing',
             benefit: 'High Demand Skill',
             badge: 'trending'
         },
         {
-            name: 'Diploma in Financial Management',
-            fullName: 'Professional Diploma in Finance',
+            name: 'Online Diploma in Financial Management',
+            fullName: 'Online Professional Diploma in Finance',
             duration: '1 Year',
             specialization: 'Financial Planning',
             benefit: 'Quick Upskilling',
             badge: null
         },
         {
-            name: 'Diploma in Business Analytics',
-            fullName: 'Professional Diploma in Analytics',
+            name: 'Online Diploma in Business Analytics',
+            fullName: 'Online Professional Diploma in Analytics',
             duration: '1 Year',
             specialization: 'Data Analytics',
             benefit: 'Career Advancement',
@@ -265,26 +314,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log('Form data collected:', { firstName, lastName, email, countryCode, phone, state, course });
 
-            // Submit to Google Sheets
-            if (typeof submitToGoogleSheets === 'function') {
-                console.log('submitToGoogleSheets function found, calling it...');
-                await submitToGoogleSheets({
-                    firstName,
-                    lastName,
-                    email,
-                    countryCode,
-                    phone,
-                    state,
-                    course
-                }, 'application');
-                console.log('submitToGoogleSheets completed');
-            } else {
-                console.error('submitToGoogleSheets function NOT found!');
-            }
-
             // Redirect to thank you page
             console.log('Redirecting to thank you page...');
-            window.location.href = `thankyou.html?name=${encodeURIComponent(firstName + ' ' + lastName)}&course=${encodeURIComponent(course)}`;
+            window.location.href = `/thankyou?name=${encodeURIComponent(firstName + ' ' + lastName)}&course=${encodeURIComponent(course)}`;
         });
     } else {
         console.log('Application form not found on this page');
@@ -304,21 +336,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const subject = document.getElementById('contactSubject').value;
             const message = document.getElementById('contactMessage').value;
 
-            // Submit to Google Sheets
-            if (typeof submitToGoogleSheets === 'function') {
-                await submitToGoogleSheets({
-                    firstName,
-                    lastName,
-                    email,
-                    countryCode,
-                    phone,
-                    subject,
-                    message
-                }, 'contact');
-            }
-
             // Redirect to thank you page
-            window.location.href = `thankyou.html?name=${encodeURIComponent(firstName + ' ' + lastName)}`;
+            window.location.href = `/thankyou?name=${encodeURIComponent(firstName + ' ' + lastName)}`;
         });
     }
 });
@@ -342,7 +361,6 @@ function loadCourses(category) {
                 </div>
                 <div class="course-info">
                     <h3>${course.name}</h3>
-                    <p class="course-full-name">${course.fullName}</p>
                     <div class="course-details">
                         <div class="detail-item">
                             <span class="detail-icon">⏱️</span>
@@ -359,7 +377,7 @@ function loadCourses(category) {
                     </div>
                     <div class="course-actions">
                         <button class="btn-apply-course" onclick="applyForCourse('${course.name}')">Apply Now</button>
-                        <button class="btn-more-info" onclick="showMoreInfo('${course.name}')">More Info</button>
+                        <button class="btn-compare" onclick="compareUniversities('${course.name}')">Compare Universities</button>
                     </div>
                 </div>
             </div>
@@ -371,23 +389,45 @@ function loadCourses(category) {
 
 // Function to apply for a course
 function applyForCourse(courseName) {
-    // Scroll to the form
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection) {
-        heroSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Open the counselling popup
+    openCounsellingPopup();
     
-    // Wait for scroll to complete, then select the course
+    // Pre-select the course in the popup form
     setTimeout(() => {
-        const courseSelect = document.getElementById('course');
+        const courseSelect = document.getElementById('counselling-course');
         if (courseSelect) {
+            // Map course names to select values
+            const courseMap = {
+                'Online MBA': 'MBA',
+                'Online MBA (Dual Specification)': 'MBA',
+                'Online MBA (WX)': 'MBA',
+                'Online Executive MBA': 'Executive MBA',
+                'Online MCA': 'MCA',
+                'Online MCom': 'Other',
+                'Online MSc (Data Science)': 'MSc Data Science',
+                'Online MA (Journalism)': 'Other',
+                'Online MA (Public Policy)': 'Other',
+                'Online BBA': 'BBA',
+                'Online BCA': 'BCA',
+                'Online BCom': 'BCom',
+                'Online BA': 'Other',
+                'BCA + MCA (Integrated)': 'Other',
+                'BBA + MBA (Integrated)': 'Other',
+                'B.Com + MBA (Integrated)': 'Other',
+                'B.Com + ACCA': 'Other',
+                'Diploma in Digital Marketing': 'Other',
+                'Diploma in Financial Management': 'Other',
+                'Diploma in Business Analytics': 'Other'
+            };
+            
+            const selectValue = courseMap[courseName] || 'Other';
+            
             // Find and select the matching option
             const options = courseSelect.options;
             for (let i = 0; i < options.length; i++) {
-                if (options[i].value === courseName || options[i].text === courseName) {
+                if (options[i].value === selectValue) {
                     courseSelect.selectedIndex = i;
                     // Highlight the select field
-                    courseSelect.focus();
                     courseSelect.style.border = '2px solid #FFD700';
                     setTimeout(() => {
                         courseSelect.style.border = '';
@@ -396,30 +436,30 @@ function applyForCourse(courseName) {
                 }
             }
         }
-    }, 800);
+    }, 100);
 }
 
 // Function to show more info about a course
 function showMoreInfo(courseName) {
     // Create a mapping of course names to their page URLs
     const coursePages = {
-        'MBA': 'courses/mba.html',
-        'MBA (Dual Specification)': 'courses/mba-dual.html',
-        'MBA (WX)': 'courses/mba-wx.html',
-        'Executive MBA': 'courses/executive-mba.html',
-        'MCA': 'courses/mca.html',
-        'MCom': 'courses/mcom.html',
-        'MSc (Data Science)': 'courses/msc-data-science.html',
-        'MA (Journalism & Mass Communication)': 'courses/ma-journalism.html',
-        'MA (Public Policy & Governance)': 'courses/ma-public-policy.html',
-        'BBA': 'courses/bba.html',
-        'BCA': 'courses/bca.html',
-        'BCom': 'courses/bcom.html',
-        'BA': 'courses/ba.html',
-        'BCA + MCA': 'courses/bca-mca.html',
-        'BBA + MBA': 'courses/bba-mba.html',
-        'B.Com + MBA': 'courses/bcom-mba.html',
-        'B.Com + ACCA': 'courses/bcom-acca.html'
+        'MBA': '/courses/mba',
+        'MBA (Dual Specification)': '/courses/mba-dual',
+        'MBA (WX)': '/courses/mba-wx',
+        'Executive MBA': '/courses/executive-mba',
+        'MCA': '/courses/mca',
+        'MCom': '/courses/mcom',
+        'MSc (Data Science)': '/courses/msc-data-science',
+        'MA (Journalism & Mass Communication)': '/courses/ma-journalism',
+        'MA (Public Policy & Governance)': '/courses/ma-public-policy',
+        'BBA': '/courses/bba',
+        'BCA': '/courses/bca',
+        'BCom': '/courses/bcom',
+        'BA': '/courses/ba',
+        'BCA + MCA': '/courses/bca-mca',
+        'BBA + MBA': '/courses/bba-mba',
+        'B.Com + MBA': '/courses/bcom-mba',
+        'B.Com + ACCA': '/courses/bcom-acca'
     };
     
     const pageUrl = coursePages[courseName];
@@ -427,6 +467,44 @@ function showMoreInfo(courseName) {
         window.location.href = pageUrl;
     } else {
         alert(`More information about ${courseName} will be available soon!`);
+    }
+}
+
+// Function to compare universities for a course
+function compareUniversities(courseName) {
+    // Remove 'Online ' prefix if present for URL mapping
+    const cleanCourseName = courseName.replace(/^Online /, '');
+    
+    // Create a mapping of course names to their comparison page URLs
+    const coursePages = {
+        'MBA': '/courses/mba',
+        'MBA (Dual Specification)': '/courses/mba-dual',
+        'MBA (WX)': '/courses/mba-wx',
+        'Executive MBA': '/courses/executive-mba',
+        'MCA': '/courses/mca',
+        'MCom': '/courses/mcom',
+        'MSc (Data Science)': '/courses/msc-data-science',
+        'MA (Journalism & Mass Communication)': '/courses/ma-journalism',
+        'MA (Public Policy & Governance)': '/courses/ma-public-policy',
+        'BBA': '/courses/bba',
+        'BCA': '/courses/bca',
+        'BCom': '/courses/bcom',
+        'BA': '/courses/ba',
+        'BCA + MCA': '/courses/bca-mca',
+        'BBA + MBA': '/courses/bba-mba',
+        'B.Com + MBA': '/courses/bcom-mba',
+        'B.Com + ACCA': '/courses/bcom-acca',
+        'Diploma in Digital Marketing': '/courses/diploma-digital-marketing',
+        'Diploma in Financial Management': '/courses/diploma-financial-management',
+        'Diploma in Business Analytics': '/courses/diploma-business-analytics'
+    };
+    
+    const pageUrl = coursePages[cleanCourseName];
+    if (pageUrl) {
+        // Navigate to the course page with comparison section
+        window.location.href = pageUrl + '#comparison';
+    } else {
+        alert(`University comparison for ${courseName} will be available soon!`);
     }
 }
 
@@ -469,3 +547,158 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 });
+
+// ================================
+// Counselling Popup Functions
+// ================================
+
+// Open Counselling Popup
+function openCounsellingPopup() {
+    const popup = document.getElementById('counsellingPopup');
+    const form = document.getElementById('counsellingForm');
+    const success = document.getElementById('counsellingSuccess');
+    
+    // Reset form and show it
+    if (form) {
+        form.style.display = 'block';
+        form.reset();
+    }
+    if (success) {
+        success.style.display = 'none';
+    }
+    
+    // Show popup with animation
+    popup.style.display = 'flex';
+    setTimeout(() => {
+        popup.classList.add('active');
+    }, 10);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+// Close Counselling Popup
+function closeCounsellingPopup() {
+    const popup = document.getElementById('counsellingPopup');
+    
+    popup.classList.remove('active');
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 300);
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+}
+
+// Close popup on overlay click
+document.addEventListener('DOMContentLoaded', function() {
+    const popup = document.getElementById('counsellingPopup');
+    if (popup) {
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                closeCounsellingPopup();
+            }
+        });
+    }
+    
+    // Close popup on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeCounsellingPopup();
+        }
+    });
+    
+    // Handle form submission
+    const counsellingForm = document.getElementById('counsellingForm');
+    if (counsellingForm) {
+        counsellingForm.addEventListener('submit', handleCounsellingSubmit);
+    }
+    
+    // Auto-open popup after 30 seconds (optional - uncomment to enable)
+    // setTimeout(openCounsellingPopup, 30000);
+});
+
+// Handle Counselling Form Submission
+async function handleCounsellingSubmit(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const submitBtn = document.getElementById('counsellingSubmitBtn');
+    const successDiv = document.getElementById('counsellingSuccess');
+    
+    // Get form data
+    const messageField = document.getElementById('counselling-message');
+    const formData = {
+        name: document.getElementById('counselling-name').value.trim(),
+        email: document.getElementById('counselling-email').value.trim(),
+        phone: document.getElementById('counselling-phone').value.trim(),
+        course: document.getElementById('counselling-course').value,
+        preferred_time: document.getElementById('counselling-time').value,
+        message: messageField ? messageField.value.trim() : ''
+    };
+    
+    // Validate phone number
+    if (!/^[0-9]{10}$/.test(formData.phone)) {
+        alert('Please enter a valid 10-digit phone number');
+        return;
+    }
+    
+    // Validate email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        alert('Please enter a valid email address');
+        return;
+    }
+    
+    // Show loading state
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    submitBtn.disabled = true;
+    
+    // Determine the correct API path based on current page location
+    let apiPath = 'api/save-counselling.php';
+    if (window.location.pathname.includes('/courses/')) {
+        apiPath = '../api/save-counselling.php';
+    }
+    
+    console.log('Submitting form data:', formData);
+    console.log('API path:', apiPath);
+    
+    try {
+        // Send data to PHP backend
+        const response = await fetch(apiPath, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        console.log('Response status:', response.status);
+        const result = await response.json();
+        console.log('Response data:', result);
+        
+        if (result.success) {
+            // Show success message
+            form.style.display = 'none';
+            successDiv.style.display = 'block';
+            
+            // Track conversion (optional - for analytics)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submission', {
+                    'event_category': 'Counselling',
+                    'event_label': formData.course
+                });
+            }
+        } else {
+            alert(result.message || 'Something went wrong. Please try again.');
+            console.error('Form submission failed:', result);
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Unable to submit form. Please try again or contact us directly.');
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+}

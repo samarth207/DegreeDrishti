@@ -1,134 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
   <url>
     <loc>https://www.degreedrishti.com/</loc>
-    <lastmod>2025-11-26</lastmod>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Main Pages -->
   <url>
-    <loc>https://www.degreedrishti.com/contact.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/about</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/mba.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/contact</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.degreedrishti.com/blog</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- University Pages -->
+  <url>
+    <loc>https://www.degreedrishti.com/manipal-online-university</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/mba-dual.html</loc>
-    <lastmod>2025-11-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.degreedrishti.com/courses/mba-wx.html</loc>
-    <lastmod>2025-11-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.degreedrishti.com/courses/executive-mba.html</loc>
-    <lastmod>2025-11-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.degreedrishti.com/courses/mca.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/amity-online-university</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/mcom.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/nmims-online-university</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Master's Programs -->
+  <url>
+    <loc>https://www.degreedrishti.com/courses/mba</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.degreedrishti.com/courses/mba-dual</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/msc-data-science.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/mba-wx</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/ma-journalism.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/executive-mba</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.degreedrishti.com/courses/mca</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.degreedrishti.com/courses/mcom</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.degreedrishti.com/courses/msc-data-science</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.degreedrishti.com/courses/ma-journalism</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/ma-public-policy.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/ma-public-policy</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Bachelor's Programs -->
   <url>
-    <loc>https://www.degreedrishti.com/courses/bba.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/bba</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/bca.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/bca</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/bcom.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/bcom</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/ba.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/ba</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Integrated Programs -->
+  <url>
+    <loc>https://www.degreedrishti.com/courses/bca-mca</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/bca-mca.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/bba-mba</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/bba-mba.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/bcom-mba</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/bcom-mba.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/bcom-acca</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Diploma Programs -->
+  <url>
+    <loc>https://www.degreedrishti.com/courses/diploma-digital-marketing</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/bcom-acca.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/diploma-financial-management</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.degreedrishti.com/courses/diploma-digital-marketing.html</loc>
-    <lastmod>2025-11-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.degreedrishti.com/courses/diploma-financial-management.html</loc>
-    <lastmod>2025-11-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.degreedrishti.com/courses/diploma-business-analytics.html</loc>
-    <lastmod>2025-11-26</lastmod>
+    <loc>https://www.degreedrishti.com/courses/diploma-business-analytics</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

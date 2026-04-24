@@ -67,37 +67,72 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const firstName = document.getElementById('modalFirstName').value;
-            const lastName = document.getElementById('modalLastName').value;
-            const email = document.getElementById('modalEmail').value;
+            const submitBtn = form.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+
+            const firstName = document.getElementById('modalFirstName').value.trim();
+            const lastName = document.getElementById('modalLastName').value.trim();
+            const email = document.getElementById('modalEmail').value.trim();
             const countryCode = document.getElementById('modalCountryCode').value;
-            const phone = document.getElementById('modalPhone').value;
+            const phone = document.getElementById('modalPhone').value.trim();
             const university = document.getElementById('modalUniversity').value;
             const course = document.getElementById('modalCourse').value;
 
-            // Submit to Google Sheets
-            if (typeof submitToGoogleSheets === 'function') {
-                await submitToGoogleSheets({
-                    firstName,
-                    lastName,
-                    email,
-                    countryCode,
-                    phone,
-                    course,
-                    university
-                }, 'application');
-            }
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
 
-            // Redirect to thank you page with parameters
-            const params = new URLSearchParams({
+            // Build payload matching save-counselling.php expected fields
+            const payload = {
                 name: `${firstName} ${lastName}`,
-                course: course,
-                university: university,
                 email: email,
-                phone: `${countryCode} ${phone}`
-            });
+                phone: phone,
+                course: course,
+                preferred_time: university, // store university in preferred_time field
+                message: `University: ${university} | Country Code: ${countryCode}`
+            };
 
-            window.location.href = `../thankyou.html?${params.toString()}`;
+            // Determine API path
+            const apiPath = window.location.pathname.includes('/courses/')
+                ? '../api/save-counselling.php'
+                : 'api/save-counselling.php';
+
+            try {
+                const response = await fetch(apiPath, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    // Track conversion
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'form_submission', {
+                            'event_category': 'Apply Now',
+                            'event_label': course
+                        });
+                    }
+                    // Redirect to thank you page
+                    const params = new URLSearchParams({
+                        name: payload.name,
+                        course: course,
+                        university: university,
+                        email: email,
+                        phone: `${countryCode} ${phone}`
+                    });
+                    window.location.href = `/thankyou?${params.toString()}`;
+                } else {
+                    alert(result.message || 'Something went wrong. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Unable to submit. Please try again or contact us directly.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
         });
     }
 
@@ -170,31 +205,29 @@ function createModalHTML() {
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
-// Function to update all Apply Now buttons
+// Function to update all Apply Now buttons to open the application modal
 function updateApplyButtons() {
-    // Get all Apply Now buttons in the comparison table
     const applyButtons = document.querySelectorAll('.btn-apply-small');
-    
+
     applyButtons.forEach(button => {
-        // Get the university name and course from the row
-        const row = button.closest('tr');
-        if (row) {
-            const universityCell = row.querySelector('.university-info span');
-            const university = universityCell ? universityCell.textContent : 'University';
-            
-            // Get course name from page header
-            const pageHeader = document.querySelector('.program-header h1');
-            let course = 'Course';
-            if (pageHeader) {
-                course = pageHeader.textContent.replace(/📊|🎓|💼|📚|🏆|🎯|✨/g, '').trim();
+        button.onclick = function(e) {
+            e.preventDefault();
+
+            // Detect university from the img alt in the first td of the same row
+            const row = button.closest('tr');
+            let uniName = 'University';
+            if (row) {
+                const img = row.querySelector('.university-info img');
+                if (img && img.alt) {
+                    uniName = img.alt;
+                }
             }
 
-            // Replace the href with onclick
-            button.href = 'javascript:void(0)';
-            button.onclick = function(e) {
-                e.preventDefault();
-                openApplicationModal(university, course);
-            };
-        }
+            // Course name: read from page <h1> or <title>
+            const h1 = document.querySelector('h1');
+            const courseName = h1 ? h1.textContent.trim() : document.title.trim();
+
+            openApplicationModal(uniName.trim(), courseName);
+        };
     });
 }

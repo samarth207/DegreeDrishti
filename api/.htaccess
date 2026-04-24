@@ -1,0 +1,18 @@
+# Block direct browser access to sensitive API files
+<Files "config.php">
+    Require all denied
+</Files>
+
+<Files "test-db.php">
+    Require all denied
+</Files>
+
+<Files "database_setup.sql">
+    Require all denied
+</Files>
+
+# No directory listing
+Options -Indexes
+
+# Only save-*.php are callable (via AJAX from same origin)
+# All others are blocked above

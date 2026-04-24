@@ -1,11 +1,62 @@
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://www.degreedrishti.com/sitemap.xml
+# Block sensitive directories and files
+Disallow: /api/
+Disallow: /del.htm
+Disallow: /*.sql$
+Disallow: /*.php$
+Disallow: /*.log$
+Disallow: /*.env$
+Disallow: /*.sh$
+Disallow: /.git/
 
-# Disallow admin or private areas (if any)
-# Disallow: /admin/
+# Block URL parameters that create duplicate content
+Disallow: /*?*utm_
+Disallow: /*?*ref=
+Disallow: /*?*source=
+Disallow: /*?*session=
+Disallow: /*?*sid=
 
-# Crawl-delay
+# Crawl-delay for polite crawling
 Crawl-delay: 1
+
+# -----------------------------------
+# Block aggressive SEO scrapers
+# -----------------------------------
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# -----------------------------------
+# Allow major search engine bots
+# -----------------------------------
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 3
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 2
+
+# Sitemap location
+Sitemap: https://www.degreedrishti.com/sitemap.xml
