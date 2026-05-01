@@ -42,6 +42,11 @@ DirectoryIndex index.html index.php
 
     # ── 4b. Serve clean URL from the physical .html file (internal rewrite) ──
     # Rule 1: root-level pages  e.g. /about → about.html
+    #         Special case: /blog → blog.php (dynamic page)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^blog/?$ blog.php [L]
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{DOCUMENT_ROOT}/$1.html -f
