@@ -165,7 +165,6 @@ function buildLeadForm(string $headline, string $btnText): string {
     return <<<HTML
 <div class="blog-lead-form-rendered">
   <div class="blf-inner">
-    <div class="blf-icon"><i class="fas fa-graduation-cap"></i></div>
     <h3 class="blf-headline">{$h}</h3>
     <p class="blf-subtext">Fill in your details and our counsellors will guide you for free.</p>
     <form class="blf-form" method="POST" action="/api/save-popup-enquiry.php" onsubmit="return submitBlogForm(this)">
@@ -375,9 +374,8 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
     .post-content .faq-answer p { margin:0; color:#4b5563; }
 
     /* Lead Form Block */
-    .blog-lead-form-rendered { background:linear-gradient(135deg,#2C3E50,#1a252f); color:#fff; border-radius:16px; padding:10px 16px; margin:24px 0; text-align:center; }
+    .blog-lead-form-rendered { background:linear-gradient(135deg,#2C3E50,#1a252f); color:#fff; border-radius:16px; padding:10px 10px; margin:14px 0; text-align:center; }
     .blf-inner { max-width:600px; margin:0 auto; }
-    .blf-icon { font-size:42px; margin-bottom:0px; }
     .blf-headline { font-size:1.5em; font-weight:700; margin-bottom:6px; color: white !important;}
     .blf-subtext { opacity:.75; font-size:14px; margin-bottom:24px; color: white; }
     .blf-fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px; }
