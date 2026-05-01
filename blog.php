@@ -98,7 +98,7 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
 
   <meta property="og:title" content="DegreeDrishti Blog | Education &amp; Career Insights">
   <meta property="og:description" content="<?= htmlspecialchars($metaDesc) ?>">
-  <meta property="og:url" content="https://www.degreedrishti.com/blog.php">
+  <meta property="og:url" content="https://www.degreedrishti.com/blog">
   <meta property="og:type" content="website">
 
   <link rel="icon" type="image/png" href="/images/favicon.png">
@@ -163,7 +163,7 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
           </div>
         </li>
         <li><a href="/about.html">About Us</a></li>
-        <li><a href="/blog.php" class="active">Blog</a></li>
+        <li><a href="/blog" class="active">Blog</a></li>
         <li><a href="/contact.html">Contact Us</a></li>
       </ul>
       <div class="hamburger">
@@ -185,7 +185,7 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
     <div class="container">
 
       <!-- Search Bar -->
-      <form method="GET" action="/blog.php" class="search-bar">
+      <form method="GET" action="/blog" class="search-bar">
         <?php if ($catFilter): ?>
           <input type="hidden" name="category" value="<?= htmlspecialchars($catFilter) ?>">
         <?php endif; ?>
@@ -196,9 +196,9 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
 
       <!-- Category Filter -->
       <div class="blog-categories">
-        <a href="/blog.php" class="blog-category-btn <?= !$catFilter ? 'active' : '' ?>">All Posts</a>
+        <a href="/blog" class="blog-category-btn <?= !$catFilter ? 'active' : '' ?>">All Posts</a>
         <?php foreach ($allCats as $cat): ?>
-        <a href="/blog.php?category=<?= urlencode($cat['slug']) ?>"
+        <a href="/blog?category=<?= urlencode($cat['slug']) ?>"
            class="blog-category-btn <?= $catFilter === $cat['slug'] ? 'active' : '' ?>">
           <?= htmlspecialchars($cat['name']) ?>
           <small style="opacity:.6">(<?= $cat['cnt'] ?>)</small>
@@ -212,7 +212,7 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
           <?= $totalBlogs ?> <?= $totalBlogs === 1 ? 'result' : 'results' ?> found
           <?= $search   ? 'for "<strong>' . htmlspecialchars($search)   . '</strong>"' : '' ?>
           <?= $catFilter ? 'in <strong>'  . htmlspecialchars($catFilter) . '</strong>'  : '' ?>
-          &nbsp;— <a href="/blog.php" style="color:#2C3E50;">Clear filters</a>
+          &nbsp;— <a href="/blog" style="color:#2C3E50;">Clear filters</a>
         </p>
       <?php endif; ?>
 
@@ -221,7 +221,7 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
         <div class="no-blogs">
           <i class="fas fa-newspaper"></i>
           <p style="font-size:18px;font-weight:600;color:#374151;">No articles found</p>
-          <p>Check back soon or <a href="/blog.php" style="color:#2C3E50;font-weight:600;">view all posts</a>.</p>
+          <p>Check back soon or <a href="/blog" style="color:#2C3E50;font-weight:600;">view all posts</a>.</p>
         </div>
       <?php else: ?>
       <div class="blog-grid">
@@ -308,7 +308,7 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
             <li><a href="/">Home</a></li>
             <li><a href="/contact.html">Contact Us</a></li>
             <li><a href="/about.html">About Us</a></li>
-            <li><a href="/blog.php">Blog</a></li>
+            <li><a href="/blog">Blog</a></li>
           </ul>
         </div>
         <div class="footer-section">

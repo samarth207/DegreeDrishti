@@ -9,7 +9,7 @@ $slug = trim($_GET['slug'] ?? '');
 
 // Redirect to blog listing if no slug
 if ($slug === '') {
-    header('Location: /blog.php', true, 301);
+    header('Location: /blog', true, 301);
     exit;
 }
 
@@ -90,7 +90,7 @@ if (!$blog): ?>
   <div style="text-align:center;padding:100px 20px;">
     <h1 style="font-size:72px;color:#2C3E50;">404</h1>
     <p style="font-size:20px;margin:16px 0;">Blog post not found.</p>
-    <a href="/blog.php" style="color:#2C3E50;font-weight:600;text-decoration:underline;">← Back to Blog</a>
+    <a href="/blog" style="color:#2C3E50;font-weight:600;text-decoration:underline;">← Back to Blog</a>
   </div>
 </body>
 </html>
@@ -293,7 +293,7 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home",  "item": "https://www.degreedrishti.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Blog",  "item": "https://www.degreedrishti.com/blog.php" },
+      { "@type": "ListItem", "position": 2, "name": "Blog",  "item": "https://www.degreedrishti.com/blog" },
       { "@type": "ListItem", "position": 3, "name": <?= json_encode($blog['title']) ?>, "item": <?= json_encode($canonicalUrl) ?> }
     ]
   }
@@ -461,7 +461,7 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
           </div>
         </li>
         <li><a href="/about.html">About Us</a></li>
-        <li><a href="/blog.php" class="active">Blog</a></li>
+        <li><a href="/blog" class="active">Blog</a></li>
         <li><a href="/contact.html">Contact Us</a></li>
       </ul>
       <div class="hamburger"><span></span><span></span><span></span></div>
@@ -476,9 +476,9 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
         <!-- Breadcrumb -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">Home</a><span>/</span>
-          <a href="/blog.php">Blog</a><span>/</span>
+          <a href="/blog">Blog</a><span>/</span>
           <?php if ($primaryCat): ?>
-            <a href="/blog.php?category=<?= urlencode(strtolower(str_replace(' ','-',trim($primaryCat)))) ?>">
+            <a href="/blog?category=<?= urlencode(strtolower(str_replace(' ','-',trim($primaryCat)))) ?>">
               <?= htmlspecialchars(trim($primaryCat)) ?>
             </a><span>/</span>
           <?php endif; ?>
@@ -488,7 +488,7 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
         <!-- Post Meta -->
         <div class="post-meta">
           <?php foreach (explode(',', $blog['category_names']) as $cat): $cat = trim($cat); if ($cat): ?>
-          <a href="/blog.php?category=<?= urlencode(makeSlugSimple($cat)) ?>" class="cat-badge">
+          <a href="/blog?category=<?= urlencode(makeSlugSimple($cat)) ?>" class="cat-badge">
             <?= htmlspecialchars($cat) ?>
           </a>
           <?php endif; endforeach; ?>
@@ -528,7 +528,7 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
         <div class="post-tags">
           <strong style="font-size:13px;color:#374151;margin-right:4px;"><i class="fas fa-hashtag"></i></strong>
           <?php foreach ($tags as $tag): $tag = trim($tag); if($tag): ?>
-          <a href="/blog.php?search=<?= urlencode($tag) ?>" class="post-tag"><?= htmlspecialchars($tag) ?></a>
+          <a href="/blog?search=<?= urlencode($tag) ?>" class="post-tag"><?= htmlspecialchars($tag) ?></a>
           <?php endif; endforeach; ?>
         </div>
         <?php endif; ?>
@@ -651,7 +651,7 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
             <li><a href="/">Home</a></li>
             <li><a href="/contact.html">Contact Us</a></li>
             <li><a href="/about.html">About Us</a></li>
-            <li><a href="/blog.php">Blog</a></li>
+            <li><a href="/blog">Blog</a></li>
           </ul>
         </div>
         <div class="footer-section">

@@ -35,10 +35,13 @@ DirectoryIndex index.html index.php
     RewriteCond %{REQUEST_URI} !^/$
     RewriteRule ^(.+)/$ /$1 [R=301,L]
 
-    # ── 4a. Redirect .html URLs → clean URL (301) ────────────────────────────
+    # ── 4a. Redirect .html / .php URLs → clean URL (301) ─────────────────────
     # Matches the raw HTTP request line so this never causes redirect loops
     RewriteCond %{THE_REQUEST} \s/(.+?)\.html[\s?] [NC]
     RewriteRule ^ /%1 [R=301,L]
+
+    RewriteCond %{THE_REQUEST} \s/blog\.php[\s?] [NC]
+    RewriteRule ^ /blog [R=301,L]
 
     # ── 4b. Serve clean URL from the physical .html file (internal rewrite) ──
     # Rule 1: root-level pages  e.g. /about → about.html
