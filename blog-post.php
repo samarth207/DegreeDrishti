@@ -375,11 +375,11 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
     .post-content .faq-answer p { margin:0; color:#4b5563; }
 
     /* Lead Form Block */
-    .blog-lead-form-rendered { background:linear-gradient(135deg,#2C3E50,#1a252f); color:#fff; border-radius:16px; padding:40px 36px; margin:44px 0; text-align:center; }
-    .blf-inner { max-width:500px; margin:0 auto; }
-    .blf-icon { font-size:42px; margin-bottom:14px; }
-    .blf-headline { font-size:1.5em; font-weight:700; margin-bottom:8px; }
-    .blf-subtext { opacity:.75; font-size:14px; margin-bottom:24px; }
+    .blog-lead-form-rendered { background:linear-gradient(135deg,#2C3E50,#1a252f); color:#fff; border-radius:16px; padding:10px 16px; margin:24px 0; text-align:center; }
+    .blf-inner { max-width:600px; margin:0 auto; }
+    .blf-icon { font-size:42px; margin-bottom:0px; }
+    .blf-headline { font-size:1.5em; font-weight:700; margin-bottom:6px; color: white !important;}
+    .blf-subtext { opacity:.75; font-size:14px; margin-bottom:24px; color: white; }
     .blf-fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px; }
     .blf-field input, .blf-field select { width:100%; padding:12px 16px; border:none; border-radius:8px; font-size:14px; color:#333; background:#fff; }
     .blf-field select { color:#333; }

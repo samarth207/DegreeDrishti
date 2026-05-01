@@ -173,10 +173,10 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
   </nav>
 
   <!-- Page Header -->
-  <section class="page-header">
+  <section class="page-header" style="background:#fff;">
     <div class="container">
-      <h1>Our Blog</h1>
-      <p>Education Insights, Career Tips &amp; Latest Updates</p>
+      <h1 style="color:#2C3E50;">Our Blog</h1>
+      <p style="color:#666;">Education Insights, Career Tips &amp; Latest Updates</p>
     </div>
   </section>
 
