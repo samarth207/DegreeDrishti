@@ -1,0 +1,8 @@
+# Admin panel - restrict access
+Options -Indexes
+
+# Prevent direct access to includes folder
+<FilesMatch "^(auth|sidebar)\.php$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
