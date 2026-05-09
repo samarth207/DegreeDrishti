@@ -18,6 +18,14 @@ try {
     $scheduled = $pdo->query("SELECT COUNT(*) FROM blogs WHERE status='scheduled'")->fetchColumn();
     $pending   = $pdo->query("SELECT COUNT(*) FROM blogs WHERE status='pending'")->fetchColumn();
 
+    // University stats
+    $totalUnis  = 0;
+    $activeUnis = 0;
+    try {
+        $totalUnis  = $pdo->query("SELECT COUNT(*) FROM universities")->fetchColumn();
+        $activeUnis = $pdo->query("SELECT COUNT(*) FROM universities WHERE active=1")->fetchColumn();
+    } catch(Exception $e) { /* table may not exist yet */ }
+
     // Recent 8 blogs
     $recentBlogs = $pdo->query(
         "SELECT b.id, b.title, b.slug, b.status, b.created_at, b.views,
@@ -37,6 +45,8 @@ try {
     $total = $published = $draft = $scheduled = $pending = 0;
     $recentBlogs = [];
     $totalViews  = 0;
+    $totalUnis   = 0;
+    $activeUnis  = 0;
 }
 ?>
 <!DOCTYPE html>
@@ -114,6 +124,13 @@ try {
           <div class="stat-info">
             <div class="stat-value"><?= number_format($totalViews) ?></div>
             <div class="stat-label">Total Views</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#e0e7ff;color:#4f46e5;"><i class="fas fa-university"></i></div>
+          <div class="stat-info">
+            <div class="stat-value"><?= $totalUnis ?></div>
+            <div class="stat-label">Universities <span style="font-size:11px;color:#9ca3af;">(<?= $activeUnis ?> live)</span></div>
           </div>
         </div>
       </div>

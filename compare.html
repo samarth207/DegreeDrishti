@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Universities | DegreeDrishti — Side-by-Side Comparison Tool</title>
+    <meta name="description" content="Compare India's top online universities side-by-side. Filter by fee budget, NAAC grade, program, and more. Make an informed decision with DegreeDrishti's free comparison tool.">
+    <meta name="keywords" content="compare online universities India, university fee comparison, NAAC grade comparison, online MBA comparison, DegreeDrishti compare">
+    <link rel="canonical" href="https://www.degreedrishti.com/compare">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="compare.css">
+</head>
+<body>
+
+    <!-- Navigation Bar (same as index.html) -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo" aria-label="DegreeDrishti - Go to Homepage">
+                <img src="images/logo-icon.png" alt="DegreeDrishti Logo">
+                <span>DegreeDrishti</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Programs <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <div class="dropdown-category">Master's Programs</div>
+                        <a href="/courses/mba">MBA</a>
+                        <a href="/courses/mca">MCA</a>
+                        <a href="/courses/mcom">MCom</a>
+                        <div class="dropdown-category">Bachelor's Programs</div>
+                        <a href="/courses/bba">BBA</a>
+                        <a href="/courses/bca">BCA</a>
+                        <a href="/courses/bcom">BCom</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Top Universities <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content university-dropdown">
+                        <a href="/amity-online-university" class="university-item">
+                            <img src="images/university-logos/amity.png" alt="Amity University">
+                            <div class="university-info">
+                                <span class="university-name">Amity University</span>
+                                <span class="university-courses">25+ Courses</span>
+                            </div>
+                        </a>
+                        <a href="/manipal-online-university" class="university-item">
+                            <img src="images/university-logos/manipal.png" alt="Manipal University">
+                            <div class="university-info">
+                                <span class="university-name">Manipal University</span>
+                                <span class="university-courses">20+ Courses</span>
+                            </div>
+                        </a>
+                        <a href="/nmims-online-university" class="university-item">
+                            <img src="images/university-logos/nmims.png" alt="NMIMS Online">
+                            <div class="university-info">
+                                <span class="university-name">NMIMS Online</span>
+                                <span class="university-courses">10+ Courses</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="/compare" class="active">Compare</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="compare-hero">
+        <div class="compare-hero-bg">
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+        </div>
+        <div class="container">
+            <div class="compare-hero-content">
+                <div class="compare-badge-hero">
+                    <i class="fas fa-balance-scale"></i> Compare Tool
+                </div>
+                <h1 class="compare-hero-title">University <span class="highlight-text">Comparison</span> Tool</h1>
+                <p class="compare-hero-subtitle">Select up to 4 universities and compare them side-by-side across 20+ factors — fees, rankings, placements, courses & more.</p>
+                <div class="compare-hero-stats">
+                    <div class="hero-stat-item">
+                        <span class="hero-stat-num" id="totalCount">10+</span>
+                        <span class="hero-stat-label">Universities</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat-item">
+                        <span class="hero-stat-num">20+</span>
+                        <span class="hero-stat-label">Comparison Factors</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat-item">
+                        <span class="hero-stat-num">Free</span>
+                        <span class="hero-stat-label">Always</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Comparison Tool -->
+    <section class="compare-main">
+        <div class="container">
+
+            <!-- Filters Bar -->
+            <div class="filters-panel">
+                <div class="filters-header">
+                    <h3><i class="fas fa-filter"></i> Filter Universities</h3>
+                    <button class="btn-clear-filters" id="clearFiltersBtn" onclick="clearFilters()">
+                        <i class="fas fa-times"></i> Clear All
+                    </button>
+                </div>
+                <div class="filters-grid">
+                    <!-- Search -->
+                    <div class="filter-group">
+                        <label for="searchInput"><i class="fas fa-search"></i> Search</label>
+                        <input type="text" id="searchInput" placeholder="Search university..." oninput="debounceSearch()">
+                    </div>
+
+                    <!-- Fee Budget -->
+                    <div class="filter-group">
+                        <label><i class="fas fa-rupee-sign"></i> Annual Fee Budget</label>
+                        <div class="fee-range-wrap">
+                            <div class="fee-range-labels">
+                                <span id="minFeeLabel">₹0</span>
+                                <span id="maxFeeLabel">₹2L+</span>
+                            </div>
+                            <div class="dual-range">
+                                <input type="range" id="minFeeRange" min="0" max="200000" step="5000" value="0" oninput="onRangeChange()">
+                                <input type="range" id="maxFeeRange" min="0" max="200000" step="5000" value="200000" oninput="onRangeChange()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sort By -->
+                    <div class="filter-group">
+                        <label for="sortSelect"><i class="fas fa-sort"></i> Sort By</label>
+                        <select id="sortSelect" onchange="applyFilters()">
+                            <option value="">Best Match</option>
+                            <option value="fee_asc">Fee: Low to High</option>
+                            <option value="fee_desc">Fee: High to Low</option>
+                            <option value="rating">Highest Rating</option>
+                            <option value="ranking">Best NIRF Rank</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                    </div>
+
+                    <!-- NAAC Grade -->
+                    <div class="filter-group">
+                        <label for="naacSelect"><i class="fas fa-certificate"></i> NAAC Grade</label>
+                        <select id="naacSelect" onchange="applyFilters()">
+                            <option value="">All Grades</option>
+                            <option value="A++">A++ (Highest)</option>
+                            <option value="A+">A+</option>
+                            <option value="A">A</option>
+                            <option value="B++">B++</option>
+                        </select>
+                    </div>
+
+                    <!-- University Type -->
+                    <div class="filter-group">
+                        <label for="typeSelect"><i class="fas fa-university"></i> University Type</label>
+                        <select id="typeSelect" onchange="applyFilters()">
+                            <option value="">All Types</option>
+                            <option value="Private">Private</option>
+                            <option value="Government">Government</option>
+                            <option value="Deemed">Deemed</option>
+                        </select>
+                    </div>
+
+                    <!-- UGC Approved -->
+                    <div class="filter-group filter-toggle-group">
+                        <label><i class="fas fa-check-shield"></i> UGC Approved Only</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="ugcToggle" onchange="applyFilters()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selected for Compare Bar -->
+            <div class="compare-bar" id="compareBar">
+                <div class="compare-bar-inner">
+                    <div class="compare-bar-title">
+                        <i class="fas fa-columns"></i>
+                        <span id="compareCount">0</span> selected for comparison
+                        <span class="compare-max-hint">(max 4)</span>
+                    </div>
+                    <div class="compare-bar-slots" id="compareSlots">
+                        <!-- Dynamic slots -->
+                    </div>
+                    <button class="btn-compare-now" id="compareNowBtn" onclick="scrollToComparison()" disabled>
+                        <i class="fas fa-balance-scale"></i> Compare Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- University Cards Grid -->
+            <div class="university-grid-section">
+                <div class="grid-header">
+                    <p class="results-count"><span id="resultsCount">0</span> universities found</p>
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')" title="Grid View">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-btn" id="listViewBtn" onclick="setView('list')" title="List View">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="university-grid" id="universityGrid">
+                    <!-- Loading skeleton -->
+                    <div class="card-skeleton"></div>
+                    <div class="card-skeleton"></div>
+                    <div class="card-skeleton"></div>
+                    <div class="card-skeleton"></div>
+                </div>
+
+                <!-- No results -->
+                <div class="no-results" id="noResults" style="display:none">
+                    <i class="fas fa-search"></i>
+                    <h3>No universities found</h3>
+                    <p>Try adjusting your filters to see more results.</p>
+                    <button onclick="clearFilters()" class="btn-compare-now">
+                        <i class="fas fa-redo"></i> Reset Filters
+                    </button>
+                </div>
+
+                <!-- Load more -->
+                <div class="load-more-wrap" id="loadMoreWrap" style="display:none">
+                    <button class="btn-load-more" id="loadMoreBtn" onclick="loadMore()">
+                        <i class="fas fa-plus"></i> Load More Universities
+                    </button>
+                </div>
+            </div>
+
+            <!-- Comparison Table Section -->
+            <div class="comparison-section" id="comparisonSection" style="display:none">
+                <div class="comparison-section-header">
+                    <h2><i class="fas fa-balance-scale"></i> Side-by-Side Comparison</h2>
+                    <div class="comparison-actions">
+                        <button class="btn-print" onclick="printComparison()">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                        <button class="btn-share" onclick="shareComparison()">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                    </div>
+                </div>
+
+                <div class="comparison-table-wrap">
+                    <table class="comparison-table" id="comparisonTable">
+                        <!-- Built by JS -->
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>DegreeDrishti</h3>
+                    <p>Your gateway to quality education and a brighter future. India's most trusted online education platform.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/degreedrishti.online" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/degree-drishti" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/degreedrishti" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/compare">Compare Universities</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Programs</h4>
+                    <ul>
+                        <li><a href="/courses/mba">Online MBA</a></li>
+                        <li><a href="/courses/mca">Online MCA</a></li>
+                        <li><a href="/courses/bba">Online BBA</a></li>
+                        <li><a href="/courses/bca">Online BCA</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> +91 92665 30366</p>
+                    <p><i class="fas fa-envelope"></i> info@degreedrishti.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> C Block, Sector 2, Noida</p>
+                    <p><i class="fas fa-clock"></i> Mon-Sat: 9 AM - 6 PM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 DegreeDrishti. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms &amp; Conditions</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Icons -->
+    <div class="sticky-icons">
+        <a href="https://wa.me/919266530366" target="_blank" class="sticky-icon whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="/contact" class="sticky-icon contact">
+            <i class="fas fa-envelope"></i>
+        </a>
+    </div>
+
+    <script src="compare.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

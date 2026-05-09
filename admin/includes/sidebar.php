@@ -30,6 +30,17 @@ $admin = getCurrentAdmin();
       <i class="fas fa-tags"></i> Categories
     </a>
 
+    <div class="nav-section-title">Universities</div>
+    <a href="/admin/universities.php" class="<?= $currentPage === 'universities.php' && empty($_GET['edit']) && empty($_GET['add']) ? 'active' : '' ?>">
+      <i class="fas fa-list"></i> All Universities
+    </a>
+    <a href="/admin/universities.php?add=1" class="<?= $currentPage === 'universities.php' && isset($_GET['add']) ? 'active' : '' ?>">
+      <i class="fas fa-plus-circle"></i> Add University
+    </a>
+    <a href="/compare" target="_blank">
+      <i class="fas fa-balance-scale"></i> Compare Page
+    </a>
+
     <div class="nav-section-title">Website</div>
     <a href="/" target="_blank">
       <i class="fas fa-globe"></i> View Website

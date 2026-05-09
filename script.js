@@ -702,3 +702,35 @@ async function handleCounsellingSubmit(e) {
         submitBtn.disabled = false;
     }
 }
+
+// ================================
+// Dynamic University Nav Dropdown
+// ================================
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdown = document.getElementById('navUniDropdown');
+    if (!dropdown) return;
+
+    fetch('/api/get-universities.php')
+        .then(r => r.json())
+        .then(json => {
+            if (!json.success || !json.data.length) {
+                dropdown.innerHTML = '<div style="padding:12px 20px;color:#999;font-size:13px;">No universities found.</div>';
+                return;
+            }
+            dropdown.innerHTML = json.data.map(u => `
+                <a href="${u.pageUrl || u.websiteUrl || '#'}" class="university-item">
+                    <img src="${u.logo || '/images/university-logos/default.png'}"
+                         alt="${u.name}"
+                         onerror="this.src='/images/university-logos/default.png'"
+                         style="width:50px;height:50px;object-fit:contain;border-radius:8px;background:#f5f5f5;padding:5px;">
+                    <div class="university-info">
+                        <span class="university-name">${u.shortName || u.name}</span>
+                        <span class="university-courses">${u.courseCount || '10'}+ Courses</span>
+                    </div>
+                </a>`).join('');
+        })
+        .catch(() => {
+            // Graceful fallback — keep loading spinner hidden
+            dropdown.innerHTML = '';
+        });
+});
