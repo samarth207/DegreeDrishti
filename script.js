@@ -2,6 +2,16 @@
 let currentSlideIndex = 1;
 let autoSlideInterval;
 
+// Promo Banner Dismiss
+function dismissBanner() {
+    const banner = document.getElementById('promoBanner');
+    const navbar = document.querySelector('.navbar');
+    if (banner) {
+        banner.style.display = 'none';
+        if (navbar) navbar.style.top = '0';
+    }
+}
+
 // Show slide function
 function showSlide(n) {
     const slides = document.querySelectorAll('.hero-slide');
@@ -351,34 +361,24 @@ function loadCourses(category) {
 
     courses.forEach(course => {
         const badgeHTML = course.badge 
-            ? `<span class="badge ${course.badge}">${course.badge === 'trending' ? '🔥 Trending' : '⚡ Few Seats Left'}</span>` 
+            ? `<span class="badge ${course.badge}">${course.badge === 'trending' ? '🔥' : '⚡'}</span>` 
             : '';
 
         const cardHTML = `
             <div class="course-card">
-                <div class="course-image">
-                    ${badgeHTML}
+                <div class="course-left">
+                    <div class="course-header">
+                        <span class="course-name">${course.name}</span>
+                        ${badgeHTML}
+                    </div>
+                    <div class="meta-tags">
+                        <span class="meta-tag">⏱ ${course.duration}</span>
+                        <span class="meta-tag">${course.specialization}</span>
+                    </div>
                 </div>
-                <div class="course-info">
-                    <h3>${course.name}</h3>
-                    <div class="course-details">
-                        <div class="detail-item">
-                            <span class="detail-icon">⏱️</span>
-                            <span class="detail-text"><strong>Duration:</strong> ${course.duration}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-icon">💼</span>
-                            <span class="detail-text">${course.specialization}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-icon">💰</span>
-                            <span class="detail-text">${course.benefit}</span>
-                        </div>
-                    </div>
-                    <div class="course-actions">
-                        <button class="btn-apply-course" onclick="applyForCourse('${course.name}')">Apply Now</button>
-                        <button class="btn-compare" onclick="compareUniversities('${course.name}')">Compare Universities</button>
-                    </div>
+                <div class="course-actions">
+                    <button class="btn-apply-course" onclick="applyForCourse('${course.name}')">Apply Now</button>
+                    <button class="btn-compare" onclick="compareUniversities('${course.name}')">Compare</button>
                 </div>
             </div>
         `;
