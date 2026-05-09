@@ -211,7 +211,7 @@ $toc         = $processed['toc'];
 // -------------------------------------------------------
 $metaTitle   = $blog['meta_title']       ?: mb_substr($blog['title'], 0, 60) . ' | DegreeDrishti';
 $metaDesc    = $blog['meta_description'] ?: mb_substr(strip_tags($blog['excerpt']), 0, 160);
-$canonicalUrl= 'https://www.degreedrishti.com/blog-post.php?slug=' . rawurlencode($blog['slug']);
+$canonicalUrl= 'https://www.degreedrishti.com/blog/' . rawurlencode($blog['slug']);
 $pubDate     = $blog['publish_date'] ?: date('Y-m-d', strtotime($blog['created_at']));
 $pubDateFmt  = date('F j, Y', strtotime($pubDate));
 $tags        = $blog['tags'] ? explode(',', $blog['tags']) : [];
@@ -591,7 +591,7 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
             <?php foreach ($relatedPosts as $r):
               $rDate = $r['publish_date'] ?: $r['created_at'];
             ?>
-            <a href="/blog-post.php?slug=<?= urlencode($r['slug']) ?>" class="related-card">
+            <a href="/blog/<?= urlencode($r['slug']) ?>" class="related-card">
               <?php if ($r['feature_image']): ?>
                 <img src="<?= htmlspecialchars($r['feature_image']) ?>"
                      alt="<?= htmlspecialchars($r['feature_image_alt'] ?: $r['title']) ?>"

@@ -228,7 +228,7 @@ if ($search) $pageTitle = 'Search: ' . htmlspecialchars($search) . ' — Blog';
         <?php foreach ($blogs as $b):
           $date = $b['publish_date'] ?: $b['created_at'];
           $dateStr = $date ? date('M j, Y', strtotime($date)) : '';
-          $postUrl = '/blog-post.php?slug=' . urlencode($b['slug']);
+          $postUrl = '/blog/' . urlencode($b['slug']);
         ?>
         <article class="blog-card">
           <a href="<?= $postUrl ?>" class="blog-post-url" aria-label="Read: <?= htmlspecialchars($b['title']) ?>">

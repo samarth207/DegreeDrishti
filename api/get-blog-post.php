@@ -114,7 +114,7 @@ try {
                 'excerpt'           => $r['excerpt'],
                 'date'              => $d ? date('d M Y', strtotime($d)) : '',
                 'read_time'         => (int)$r['read_time'],
-                'url'               => '/blog-post.php?slug=' . rawurlencode($r['slug']),
+                'url'               => '/blog/' . rawurlencode($r['slug']),
             ];
         }, $relatedPosts),
     ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

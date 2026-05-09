@@ -43,12 +43,21 @@ DirectoryIndex index.html index.php
     RewriteCond %{THE_REQUEST} \s/blog\.php[\s?] [NC]
     RewriteRule ^ /blog [R=301,L]
 
+    # Redirect blog-post.php?slug=XXX → /blog/XXX (clean URL)
+    RewriteCond %{THE_REQUEST} \s/blog-post\.php\?slug=([^\s&]+) [NC]
+    RewriteRule ^ /blog/%1 [R=301,L]
+
     # ── 4b. Serve clean URL from the physical .html file (internal rewrite) ──
     # Rule 1: root-level pages  e.g. /about → about.html
     #         Special case: /blog → blog.php (dynamic page)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^blog/?$ blog.php [L]
+
+    # /blog/post-slug → blog-post.php (internal rewrite, no redirect loop)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^blog/([^/]+)/?$ blog-post.php?slug=$1 [L,QSA]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

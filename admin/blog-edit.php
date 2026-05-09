@@ -313,7 +313,7 @@ $tagsDefault = implode(',', $selectedTags);
       </div>
       <div class="topbar-right">
         <?php if ($isEdit && $blog['status'] === 'published'): ?>
-        <a href="/blog-post.php?slug=<?= esc($blog['slug']) ?>" target="_blank"
+        <a href="/blog/<?= esc($blog['slug']) ?>" target="_blank"
            class="btn btn-outline btn-sm">
           <i class="fas fa-eye"></i> View Post
         </a>

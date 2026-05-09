@@ -95,7 +95,7 @@ try {
             'views'             => (int)$row['views'],
             'categories'        => $row['categories'] ?: '',
             'category_slugs'    => $row['category_slugs'] ? explode(',', $row['category_slugs']) : [],
-            'url'               => '/blog-post.php?slug=' . rawurlencode($row['slug']),
+            'url'               => '/blog/' . rawurlencode($row['slug']),
         ];
     }, $rows);
 

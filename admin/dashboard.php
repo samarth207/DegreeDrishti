@@ -157,7 +157,7 @@ try {
                     <i class="fas fa-edit"></i>
                   </a>
                   <?php if ($b['status'] === 'published'): ?>
-                  <a href="/blog-post.php?slug=<?= esc($b['slug']) ?>" target="_blank" class="btn btn-sm" style="background:#dcfce7;color:#166534;">
+                  <a href="/blog/<?= esc($b['slug']) ?>" target="_blank" class="btn btn-sm" style="background:#dcfce7;color:#166534;">
                     <i class="fas fa-external-link-alt"></i>
                   </a>
                   <?php endif; ?>
