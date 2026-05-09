@@ -8,6 +8,7 @@ const MAX_COMPARE = 4;
 let allUniversities = [];
 let filteredUniversities = [];
 let selectedIds = [];
+let selectedCourse = '';       // course filter for comparison
 let currentPage = 1;
 const PER_PAGE = 12;
 let currentView = 'grid';
@@ -171,14 +172,14 @@ function loadMore() {
 
 // ---- Card Builder ----
 function buildCard(u) {
-  const isSelected = selectedIds.includes(u._id);
+  const isSelected = selectedIds.includes(u.id);
   const feeProgress = Math.min(100, (u.minFee / 200000) * 100);
   const stars = buildStars(u.rating || 0);
   const highlights = (u.highlights || []).slice(0, 3)
     .map(h => `<span class="highlight-tag">${h}</span>`).join('');
 
   return `
-  <div class="uni-card${isSelected ? ' selected-card' : ''}" id="card-${u._id}" data-id="${u._id}">
+  <div class="uni-card${isSelected ? ' selected-card' : ''}" id="card-${u.id}" data-id="${u.id}">
     <div class="card-top">
       <img class="card-logo" src="${u.logo || '/images/university-logos/default.png'}"
            alt="${u.name}" onerror="this.src='/images/university-logos/default.png'">
@@ -230,8 +231,8 @@ function buildCard(u) {
 
     <div class="card-footer">
       <button class="btn-card-compare${isSelected ? ' active-compare' : ''}"
-              id="cmpBtn-${u._id}"
-              onclick="toggleCompare('${u._id}')">
+              id="cmpBtn-${u.id}"
+              onclick="toggleCompare('${u.id}')">
         ${isSelected
           ? '<i class="fas fa-minus"></i> Remove'
           : '<i class="fas fa-plus"></i> + Compare'}
@@ -290,14 +291,14 @@ function updateCompareBar() {
   count.textContent = selectedIds.length;
   btn.disabled = selectedIds.length < 2;
 
-  const selected = selectedIds.map(id => allUniversities.find(u => u._id === id)).filter(Boolean);
+  const selected = selectedIds.map(id => allUniversities.find(u => u.id === id)).filter(Boolean);
   slots.innerHTML = selected.map(u => `
     <div class="compare-slot">
       <img src="${u.logo || '/images/university-logos/default.png'}"
            alt="${u.shortName || u.name}"
            onerror="this.src='/images/university-logos/default.png'">
       ${u.shortName || u.name.split(' ')[0]}
-      <button class="compare-slot-remove" onclick="removeFromCompare('${u._id}')" title="Remove">
+      <button class="compare-slot-remove" onclick="removeFromCompare('${u.id}')" title="Remove">
         <i class="fas fa-times"></i>
       </button>
     </div>`).join('');
@@ -321,7 +322,7 @@ function updateComparisonTable() {
   }
   section.style.display = 'block';
 
-  const unis = selectedIds.map(id => allUniversities.find(u => u._id === id)).filter(Boolean);
+  const unis = selectedIds.map(id => allUniversities.find(u => u.id === id)).filter(Boolean);
   if (!unis.length) return;
 
   // Find best values for highlighting
@@ -331,7 +332,28 @@ function updateComparisonTable() {
   const bestNirf       = Math.min(...unis.map(u => u.ranking?.nirf || Infinity));
   const bestSalary     = Math.max(...unis.map(u => u.avgSalary || 0));
 
+  // Course-specific rows (prepended when a course is selected)
+  let courseRows = [];
+  if (selectedCourse) {
+    const getCourse = u => (u.courses || []).find(c =>
+      c.name.toUpperCase().includes(selectedCourse.toUpperCase())
+    );
+    const courseFees    = unis.map(u => getCourse(u)?.fee || 0).filter(Boolean);
+    const bestCourseFee = courseFees.length ? Math.min(...courseFees) : 0;
+    const worstCourseFee= courseFees.length ? Math.max(...courseFees) : 0;
+
+    courseRows = [
+      { cat: `🎓 ${selectedCourse} — Course Details`, courseSection: true },
+      { label: 'Available',        icon: 'fa-check-circle', val: u => getCourse(u) ? '<span class="check-yes">✓ Yes</span>' : '<span class="check-no">✗ Not Offered</span>', html: true },
+      { label: 'Duration',         icon: 'fa-clock',        val: u => getCourse(u)?.duration || '—' },
+      { label: 'Annual Fee',       icon: 'fa-rupee-sign',   val: u => getCourse(u) ? `<strong>${formatFee(getCourse(u).fee)}</strong>` : '—', html: true, best: u => getCourse(u)?.fee === bestCourseFee && bestCourseFee > 0, worst: u => getCourse(u)?.fee === worstCourseFee && worstCourseFee !== bestCourseFee },
+      { label: 'Total Fee',        icon: 'fa-wallet',       val: u => getCourse(u) ? formatFee(getCourse(u).totalFee) : '—' },
+      { label: 'Specializations',  icon: 'fa-list-ul',      val: u => (getCourse(u)?.specializations || []).join(', ') || '—' },
+    ];
+  }
+
   const rows = [
+
     { cat: '🏫 Overview' },
     { label: 'Location',       icon: 'fa-map-marker-alt', val: u => u.location || 'N/A' },
     { label: 'Established',    icon: 'fa-calendar',       val: u => u.established || 'N/A' },
@@ -372,21 +394,22 @@ function updateComparisonTable() {
              onerror="this.src='/images/university-logos/default.png'">
         <div class="col-header-name">${u.name}</div>
         <div class="col-header-location"><i class="fas fa-map-marker-alt"></i> ${u.location || ''}</div>
-        <button class="remove-col-btn" onclick="removeFromCompare('${u._id}')" title="Remove from comparison">
+        <button class="remove-col-btn" onclick="removeFromCompare('${u.id}')" title="Remove from comparison">
           <i class="fas fa-times-circle"></i>
         </button>
       </th>`).join('')}
   </tr>`;
 
-  let bodyRows = rows.map(row => {
+  let bodyRows = [...courseRows, ...rows].map(row => {
     if (row.cat) {
-      return `<tr class="category-row">
+      const cls = row.courseSection ? 'course-section-row' : 'category-row';
+      return `<tr class="${cls}">
         <td colspan="${unis.length + 1}">${row.cat}</td>
       </tr>`;
     }
     const cells = unis.map(u => {
       const rawVal = row.val(u);
-      const isBest  = row.best && row.best(u);
+      const isBest  = row.best  && row.best(u);
       const isWorst = row.worst && row.worst(u);
       const cls = isBest ? 'best-val' : (isWorst ? 'worst-val' : '');
       if (row.html) return `<td class="${cls}">${rawVal}</td>`;
@@ -408,6 +431,21 @@ function setView(view) {
   document.getElementById('gridViewBtn').classList.toggle('active', view === 'grid');
   document.getElementById('listViewBtn').classList.toggle('active', view === 'list');
   grid.classList.toggle('list-view', view === 'list');
+}
+
+// ---- Course Filter ----
+function setCourseFilter(course) {
+  selectedCourse = course;
+  // Update pill UI
+  document.querySelectorAll('.course-pill').forEach(p => p.classList.remove('active'));
+  const activeId = course ? `pill-${course}` : 'pill-all';
+  const activePill = document.getElementById(activeId);
+  if (activePill) activePill.classList.add('active');
+  // Update label in comparison header
+  const label = document.getElementById('courseCompareLabel');
+  if (label) label.textContent = course ? `— ${course} Mode` : '';
+  // Re-render table if open
+  if (selectedIds.length >= 2) updateComparisonTable();
 }
 
 // ---- Utility ----

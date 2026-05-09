@@ -122,6 +122,20 @@
                         <i class="fas fa-times"></i> Clear All
                     </button>
                 </div>
+                <!-- Course Selector -->
+                <div class="course-filter-banner">
+                    <div class="course-filter-label"><i class="fas fa-graduation-cap"></i> Compare by Course <span class="course-hint">(optional — shows course-specific fees & details)</span></div>
+                    <div class="course-pills" id="coursePills">
+                        <button class="course-pill active" onclick="setCourseFilter('')" id="pill-all">All Courses</button>
+                        <button class="course-pill" onclick="setCourseFilter('MBA')" id="pill-MBA">MBA</button>
+                        <button class="course-pill" onclick="setCourseFilter('MCA')" id="pill-MCA">MCA</button>
+                        <button class="course-pill" onclick="setCourseFilter('BBA')" id="pill-BBA">BBA</button>
+                        <button class="course-pill" onclick="setCourseFilter('BCA')" id="pill-BCA">BCA</button>
+                        <button class="course-pill" onclick="setCourseFilter('BCom')" id="pill-BCom">BCom</button>
+                        <button class="course-pill" onclick="setCourseFilter('MA')" id="pill-MA">MA</button>
+                        <button class="course-pill" onclick="setCourseFilter('MSc')" id="pill-MSc">MSc</button>
+                    </div>
+                </div>
                 <div class="filters-grid">
                     <!-- Search -->
                     <div class="filter-group">
@@ -251,7 +265,11 @@
             <!-- Comparison Table Section -->
             <div class="comparison-section" id="comparisonSection" style="display:none">
                 <div class="comparison-section-header">
-                    <h2><i class="fas fa-balance-scale"></i> Side-by-Side Comparison</h2>
+                    <div>
+                        <h2><i class="fas fa-balance-scale"></i> Side-by-Side Comparison
+                            <span id="courseCompareLabel" style="font-size:15px;font-weight:500;color:#667eea;margin-left:10px;"></span>
+                        </h2>
+                    </div>
                     <div class="comparison-actions">
                         <button class="btn-print" onclick="printComparison()">
                             <i class="fas fa-print"></i> Print

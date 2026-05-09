@@ -93,6 +93,7 @@ echo json_encode([
 
 // ── Row mapper (DB → frontend shape) ──────────────────────────────────────────
 function mapRow(array $r): array {
+    $courses = $r['courses_json'] ? json_decode($r['courses_json'], true) : [];
     return [
         'id'                => (string)$r['id'],
         'slug'              => $r['slug'],
@@ -108,7 +109,7 @@ function mapRow(array $r): array {
             'nirf'    => $r['rank_nirf']    ? (int)$r['rank_nirf']    : null,
             'outlook' => $r['rank_outlook'] ? (int)$r['rank_outlook'] : null,
         ],
-        'courses'           => $r['courses_json'] ? json_decode($r['courses_json'], true) : [],
+        'courses'           => is_array($courses) ? $courses : [],
         'minFee'            => (int)$r['min_fee'],
         'maxFee'            => (int)$r['max_fee'],
         'admissionMode'     => $r['admission_mode'],
