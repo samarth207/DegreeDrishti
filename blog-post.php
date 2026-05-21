@@ -434,6 +434,15 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
   </style>
 </head>
 <body>
+    <!-- Promo Banner -->
+    <div class="promo-banner" id="promoBanner">
+        <div class="banner-inner">
+            <span class="banner-badge">🎉 Limited Time</span>
+            <span class="banner-text">Get up to <strong>₹20,000 Scholarship</strong> on Online Courses &mdash; Seats Filling Fast!</span>
+            <a href="/contact" class="banner-cta">Claim Now &rarr;</a>
+        </div>
+        <button class="banner-close" onclick="dismissBanner()" aria-label="Close">&times;</button>
+    </div>
   <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
