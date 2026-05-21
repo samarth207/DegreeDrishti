@@ -185,13 +185,13 @@ function buildCard(u) {
            alt="${u.name}" onerror="this.src='/images/university-logos/default.png'">
       <div class="card-title-wrap">
         <div class="card-uni-name">${u.name}</div>
-        <div class="card-badges">
-          ${u.featured ? '<span class="badge badge-featured">⭐ Featured</span>' : ''}
-          <span class="badge badge-naac">NAAC ${u.naacGrade || 'N/A'}</span>
-          ${u.ugcApproved ? '<span class="badge badge-ugc">UGC ✓</span>' : ''}
-          <span class="badge badge-type">${u.type || ''}</span>
-        </div>
       </div>
+    </div>
+    <div class="card-badges">
+      ${u.featured ? '<span class="badge badge-featured">⭐ Featured</span>' : ''}
+      <span class="badge badge-naac">NAAC ${u.naacGrade || 'N/A'}</span>
+      ${u.ugcApproved ? '<span class="badge badge-ugc">UGC ✓</span>' : ''}
+      ${u.type ? `<span class="badge badge-type">${u.type}</span>` : ''}
     </div>
 
     <div class="card-body">

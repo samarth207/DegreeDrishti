@@ -224,26 +224,45 @@
 }
 .uni-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.13); }
 .uni-card.selected-card { border-color: #667eea; box-shadow: 0 8px 32px rgba(102,126,234,0.3); }
-.uni-card.selected-card::after {
-  content: '✓ Selected'; position: absolute; bottom: 54px; right: 14px;
-  background: #667eea; color: #fff; font-size: 11px; font-weight: 700;
-  padding: 3px 10px; border-radius: 20px;
+.uni-card.selected-card::before {
+  content: '✓ Added to Compare';
+  display: block;
+  background: #667eea;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  padding: 5px 10px;
+  letter-spacing: 0.3px;
 }
 .card-top {
   background: linear-gradient(135deg,#f8f9ff 0%,#eef0ff 100%);
-  padding: 18px 18px 14px; display: flex; align-items: flex-start; gap: 14px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 18px 12px; display: flex; align-items: center; gap: 14px;
+  border-bottom: none;
 }
 .card-logo {
-  width: 56px; height: 56px; object-fit: contain;
+  width: 52px; height: 52px; object-fit: contain;
   border-radius: 10px; background: #fff; padding: 5px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1); flex-shrink: 0;
 }
-.card-title-wrap { flex: 1; min-width: 0; overflow: visible; }
-.card-uni-name { font-size: 14px; font-weight: 700; color: #1a252f; line-height: 1.3; margin-bottom: 6px; }
-.card-badges { display: flex; gap: 5px; flex-wrap: wrap; row-gap: 4px; }
+.card-title-wrap { flex: 1; min-width: 0; }
+.card-uni-name { font-size: 14px; font-weight: 700; color: #1a252f; line-height: 1.3; }
+.card-badges {
+  display: flex; gap: 5px; flex-wrap: wrap;
+  margin-top: 6px;
+}
+/* when card-badges is a standalone sibling of card-top (future structure) */
+.uni-card > .card-badges {
+  flex-wrap: nowrap; overflow-x: auto;
+  padding: 8px 18px 10px; margin-top: 0;
+  background: linear-gradient(135deg,#f8f9ff 0%,#eef0ff 100%);
+  border-bottom: 1px solid #f0f0f0;
+  scrollbar-width: none;
+}
+.uni-card > .card-badges::-webkit-scrollbar { display: none; }
 .badge {
   font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px;
+  white-space: nowrap; flex-shrink: 0;
 }
 .badge-naac { background: #e8f5e9; color: #2e7d32; }
 .badge-ugc  { background: #e3f2fd; color: #1565c0; }
@@ -298,7 +317,8 @@
 
 /* List view card */
 .university-grid.list-view .uni-card { flex-direction: row; }
-.university-grid.list-view .card-top { width: 280px; flex-shrink: 0; border-bottom: none; border-right: 1px solid #f0f0f0; flex-direction: column; align-items: center; text-align: center; }
+.university-grid.list-view .card-top { width: 220px; flex-shrink: 0; border-bottom: none; border-right: none; flex-direction: column; align-items: center; text-align: center; padding-bottom: 8px; }
+.university-grid.list-view .card-badges { width: 220px; flex-shrink: 0; justify-content: center; border-right: 1px solid #f0f0f0; border-bottom: none; padding-top: 0; }
 .university-grid.list-view .card-body { padding: 22px; }
 .university-grid.list-view .card-footer { flex-direction: column; width: 160px; flex-shrink: 0; border-top: none; border-left: 1px solid #f5f5f5; justify-content: center; }
 
@@ -384,7 +404,8 @@
   .compare-bar-inner { flex-wrap: wrap; }
   .comparison-section-header { flex-direction: column; gap: 14px; align-items: flex-start; }
   .university-grid.list-view .uni-card { flex-direction: column; }
-  .university-grid.list-view .card-top { width: 100%; border-right: none; border-bottom: 1px solid #f0f0f0; }
+  .university-grid.list-view .card-top { width: 100%; border-right: none; border-bottom: none; }
+  .university-grid.list-view .card-badges { width: 100%; border-right: none; border-bottom: 1px solid #f0f0f0; }
   .university-grid.list-view .card-footer { width: 100%; border-left: none; border-top: 1px solid #f5f5f5; flex-direction: row; }
 }
 @media (max-width: 480px) {
