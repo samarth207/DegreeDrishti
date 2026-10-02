@@ -20,7 +20,7 @@
             <span class="banner-text">Get up to <strong>₹20,000 Scholarship</strong> on Online Courses &mdash; Seats Filling Fast!</span>
             <a href="/contact" class="banner-cta">Claim Now &rarr;</a>
         </div>
-        <button class="banner-close" onclick="dismissBanner()" aria-label="Close">&times;</button>
+        <button type="button" class="banner-close" onclick="dismissBanner()" aria-label="Close">&times;</button>
     </div>
 
     <!-- Navigation Bar (same as index.html) -->
@@ -33,36 +33,36 @@
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropbtn">Programs <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content">
+                    <a href="#" class="dropbtn" aria-haspopup="true" aria-expanded="false">Programs <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content" role="menu">
                         <div class="dropdown-category">Master's Programs</div>
-                        <a href="/courses/mba">MBA</a>
-                        <a href="/courses/mca">MCA</a>
-                        <a href="/courses/mcom">MCom</a>
+                        <a href="/courses/mba" role="menuitem">MBA</a>
+                        <a href="/courses/mca" role="menuitem">MCA</a>
+                        <a href="/courses/mcom" role="menuitem">MCom</a>
                         <div class="dropdown-category">Bachelor's Programs</div>
-                        <a href="/courses/bba">BBA</a>
-                        <a href="/courses/bca">BCA</a>
-                        <a href="/courses/bcom">BCom</a>
+                        <a href="/courses/bba" role="menuitem">BBA</a>
+                        <a href="/courses/bca" role="menuitem">BCA</a>
+                        <a href="/courses/bcom" role="menuitem">BCom</a>
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropbtn">Top Universities <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content university-dropdown">
-                        <a href="/amity-online-university" class="university-item">
+                    <a href="#" class="dropbtn" aria-haspopup="true" aria-expanded="false">Top Universities <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content university-dropdown" role="menu">
+                        <a href="/amity-online-university" class="university-item" role="menuitem">
                             <img src="images/university-logos/amity.png" alt="Amity University">
                             <div class="university-info">
                                 <span class="university-name">Amity University</span>
                                 <span class="university-courses">25+ Courses</span>
                             </div>
                         </a>
-                        <a href="/manipal-online-university" class="university-item">
+                        <a href="/manipal-online-university" class="university-item" role="menuitem">
                             <img src="images/university-logos/manipal.png" alt="Manipal University">
                             <div class="university-info">
                                 <span class="university-name">Manipal University</span>
                                 <span class="university-courses">20+ Courses</span>
                             </div>
                         </a>
-                        <a href="/nmims-online-university" class="university-item">
+                        <a href="/nmims-online-university" class="university-item" role="menuitem">
                             <img src="images/university-logos/nmims.png" alt="NMIMS Online">
                             <div class="university-info">
                                 <span class="university-name">NMIMS Online</span>
@@ -127,22 +127,22 @@
             <div class="filters-panel">
                 <div class="filters-header">
                     <h3><i class="fas fa-filter"></i> Filter Universities</h3>
-                    <button class="btn-clear-filters" id="clearFiltersBtn" onclick="clearFilters()">
+                    <button type="button" class="btn-clear-filters" id="clearFiltersBtn" onclick="clearFilters()">
                         <i class="fas fa-times"></i> Clear All
                     </button>
                 </div>
                 <!-- Course Selector -->
                 <div class="course-filter-banner">
                     <div class="course-filter-label"><i class="fas fa-graduation-cap"></i> Compare by Course <span class="course-hint">(optional — shows course-specific fees & details)</span></div>
-                    <div class="course-pills" id="coursePills">
-                        <button class="course-pill active" onclick="setCourseFilter('')" id="pill-all">All Courses</button>
-                        <button class="course-pill" onclick="setCourseFilter('MBA')" id="pill-MBA">MBA</button>
-                        <button class="course-pill" onclick="setCourseFilter('MCA')" id="pill-MCA">MCA</button>
-                        <button class="course-pill" onclick="setCourseFilter('BBA')" id="pill-BBA">BBA</button>
-                        <button class="course-pill" onclick="setCourseFilter('BCA')" id="pill-BCA">BCA</button>
-                        <button class="course-pill" onclick="setCourseFilter('BCom')" id="pill-BCom">BCom</button>
-                        <button class="course-pill" onclick="setCourseFilter('MA')" id="pill-MA">MA</button>
-                        <button class="course-pill" onclick="setCourseFilter('MSc')" id="pill-MSc">MSc</button>
+                    <div class="course-pills" id="coursePills" role="group" aria-label="Course filter options">
+                        <button type="button" class="course-pill active" onclick="setCourseFilter('')" id="pill-all" aria-pressed="true">All Courses</button>
+                        <button type="button" class="course-pill" onclick="setCourseFilter('MBA')" id="pill-MBA" aria-pressed="false">MBA</button>
+                        <button type="button" class="course-pill" onclick="setCourseFilter('MCA')" id="pill-MCA" aria-pressed="false">MCA</button>
+                        <button type="button" class="course-pill" onclick="setCourseFilter('BBA')" id="pill-BBA" aria-pressed="false">BBA</button>
+                        <button type="button" class="course-pill" onclick="setCourseFilter('BCA')" id="pill-BCA" aria-pressed="false">BCA</button>
+                        <button type="button" class="course-pill" onclick="setCourseFilter('BCom')" id="pill-BCom" aria-pressed="false">BCom</button>
+                        <button type="button" class="course-pill" onclick="setCourseFilter('MA')" id="pill-MA" aria-pressed="false">MA</button>
+                        <button type="button" class="course-pill" onclick="setCourseFilter('MSc')" id="pill-MSc" aria-pressed="false">MSc</button>
                     </div>
                 </div>
                 <div class="filters-grid">
@@ -225,7 +225,7 @@
                     <div class="compare-bar-slots" id="compareSlots">
                         <!-- Dynamic slots -->
                     </div>
-                    <button class="btn-compare-now" id="compareNowBtn" onclick="scrollToComparison()" disabled>
+                    <button type="button" class="btn-compare-now" id="compareNowBtn" onclick="scrollToComparison()" disabled>
                         <i class="fas fa-balance-scale"></i> Compare Now
                     </button>
                 </div>
@@ -236,10 +236,10 @@
                 <div class="grid-header">
                     <p class="results-count"><span id="resultsCount">0</span> universities found</p>
                     <div class="view-toggle">
-                        <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')" title="Grid View">
+                        <button type="button" class="view-btn active" id="gridViewBtn" onclick="setView('grid')" title="Grid View">
                             <i class="fas fa-th-large"></i>
                         </button>
-                        <button class="view-btn" id="listViewBtn" onclick="setView('list')" title="List View">
+                        <button type="button" class="view-btn" id="listViewBtn" onclick="setView('list')" title="List View">
                             <i class="fas fa-list"></i>
                         </button>
                     </div>
@@ -258,14 +258,14 @@
                     <i class="fas fa-search"></i>
                     <h3>No universities found</h3>
                     <p>Try adjusting your filters to see more results.</p>
-                    <button onclick="clearFilters()" class="btn-compare-now">
+                    <button type="button" onclick="clearFilters()" class="btn-compare-now">
                         <i class="fas fa-redo"></i> Reset Filters
                     </button>
                 </div>
 
                 <!-- Load more -->
                 <div class="load-more-wrap" id="loadMoreWrap" style="display:none">
-                    <button class="btn-load-more" id="loadMoreBtn" onclick="loadMore()">
+                    <button type="button" class="btn-load-more" id="loadMoreBtn" onclick="loadMore()">
                         <i class="fas fa-plus"></i> Load More Universities
                     </button>
                 </div>
@@ -280,10 +280,10 @@
                         </h2>
                     </div>
                     <div class="comparison-actions">
-                        <button class="btn-print" onclick="printComparison()">
+                        <button type="button" class="btn-print" onclick="printComparison()">
                             <i class="fas fa-print"></i> Print
                         </button>
-                        <button class="btn-share" onclick="shareComparison()">
+                        <button type="button" class="btn-share" onclick="shareComparison()">
                             <i class="fas fa-share-alt"></i> Share
                         </button>
                     </div>
@@ -307,10 +307,10 @@
                     <h3>DegreeDrishti</h3>
                     <p>Your gateway to quality education and a brighter future. India's most trusted online education platform.</p>
                     <div class="footer-social">
-                        <a href="https://www.facebook.com/degreedrishti.online" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.linkedin.com/company/degree-drishti" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://www.instagram.com/degreedrishti" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/degreedrishti.online" aria-label="DegreeDrishti on Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="DegreeDrishti on Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/degree-drishti" aria-label="DegreeDrishti on LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/degreedrishti" aria-label="DegreeDrishti on Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="footer-section">

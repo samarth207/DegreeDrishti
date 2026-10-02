@@ -18,7 +18,7 @@ let searchDebounceTimer = null;
 document.addEventListener('DOMContentLoaded', () => {
   initRangeTrack();
   fetchUniversities();
-  setupHamburger();
+  // Hamburger menu is handled in script.js
 });
 
 // ---- Filters ----
@@ -437,10 +437,18 @@ function setView(view) {
 function setCourseFilter(course) {
   selectedCourse = course;
   // Update pill UI
-  document.querySelectorAll('.course-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.course-pill').forEach(p => {
+    p.classList.remove('active');
+    p.setAttribute('aria-pressed', 'false');
+  });
   const activeId = course ? `pill-${course}` : 'pill-all';
   const activePill = document.getElementById(activeId);
-  if (activePill) activePill.classList.add('active');
+  if (activePill) {
+    activePill.classList.add('active');
+    activePill.setAttribute('aria-pressed', 'true');
+  } else {
+    console.warn(`Course pill not found: ${activeId}`);
+  }
   // Update label in comparison header
   const label = document.getElementById('courseCompareLabel');
   if (label) label.textContent = course ? `— ${course} Mode` : '';
@@ -538,20 +546,15 @@ function loadFromUrl() {
 }
 
 // ---- Hamburger ----
-function setupHamburger() {
-  const btn = document.getElementById('hamburger');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('active');
-    const nav = document.querySelector('.nav-links');
-    if (nav) nav.classList.toggle('open');
-  });
-}
+// NOTE: Hamburger menu is handled in script.js to avoid duplicate event listeners
 
 async function fetchUniversities() {
   try {
     showSkeletons();
     const res = await fetch(`${API_BASE}?limit=100`);
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
     const json = await res.json();
     if (json.success) {
       allUniversities = json.data;
@@ -559,6 +562,8 @@ async function fetchUniversities() {
       document.getElementById('totalCount').textContent = allUniversities.length + '+';
       renderGrid();
       loadFromUrl();
+    } else {
+      throw new Error(json.message || 'API returned unsuccessful response');
     }
   } catch (err) {
     console.error('API error:', err);

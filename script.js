@@ -233,7 +233,7 @@ const coursesData = {
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
-    const dropdown = document.querySelector('.dropdown');
+    const dropdowns = document.querySelectorAll('.dropdown');
 
     if (hamburger) {
         hamburger.addEventListener('click', function() {
@@ -242,18 +242,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle dropdown on mobile
-    if (dropdown) {
+    // Handle dropdowns on mobile (support multiple dropdowns)
+    dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         if (dropbtn) {
             dropbtn.addEventListener('click', function(e) {
                 if (window.innerWidth <= 968) {
                     e.preventDefault();
-                    dropdown.classList.toggle('active');
+                    const isActive = dropdown.classList.toggle('active');
+                    dropbtn.setAttribute('aria-expanded', isActive);
                 }
             });
         }
-    }
+    });
 
     // Close menu when clicking on a link
     const navItems = document.querySelectorAll('.nav-links a:not(.dropbtn)');
@@ -263,9 +264,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (hamburger) {
                 hamburger.classList.remove('active');
             }
-            if (dropdown) {
+            dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
-            }
+                const dropbtn = dropdown.querySelector('.dropbtn');
+                if (dropbtn) dropbtn.setAttribute('aria-expanded', 'false');
+            });
         });
     });
 
@@ -276,9 +279,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (hamburger) {
                 hamburger.classList.remove('active');
             }
-            if (dropdown) {
+            dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
-            }
+                const dropbtn = dropdown.querySelector('.dropbtn');
+                if (dropbtn) dropbtn.setAttribute('aria-expanded', 'false');
+            });
         }
     });
 
