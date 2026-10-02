@@ -1056,18 +1056,21 @@ a.logo:hover {
 
 .meta-tags {
     display: flex;
-    gap: 5px;
+    gap: 6px;
     flex-wrap: wrap;
-    flex: 1;
+    align-items: flex-start;
 }
 
 .meta-tag {
     background: #f0f4ff;
     color: #4a5568;
     font-size: 11px;
-    padding: 3px 9px;
+    padding: 4px 10px;
     border-radius: 20px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
 }
 
 .course-left {

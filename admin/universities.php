@@ -66,7 +66,7 @@ $universities=$pdo->query('SELECT id,name,short_name,type,naac_grade,min_fee,rat
 <html lang="en">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Universities — DegreeDrishti Admin</title>
+  <title>Universities ï¿½ DegreeDrishti Admin</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="/admin/assets/admin.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -186,7 +186,7 @@ $universities=$pdo->query('SELECT id,name,short_name,type,naac_grade,min_fee,rat
         <div class="form-group">
           <label><i class="fas fa-certificate"></i> NAAC Grade</label>
           <select name="naac_grade">
-            <option value="">— Select —</option>
+            <option value="">ï¿½ Select ï¿½</option>
             <?php foreach(['A++','A+','A','B++','B+','B'] as $g): ?>
             <option value="<?=$g?>" <?=($f['naac_grade']??'')===$g?'selected':''?>><?=$g?></option>
             <?php endforeach; ?>
@@ -205,11 +205,11 @@ $universities=$pdo->query('SELECT id,name,short_name,type,naac_grade,min_fee,rat
       <div class="uni-section-title">Fees</div>
       <div class="form-grid">
         <div class="form-group">
-          <label><i class="fas fa-rupee-sign"></i> Min Annual Fee (?)</label>
+          <label><i class="fas fa-rupee-sign"></i> Min Annual Fee (â‚¹)</label>
           <input type="number" name="min_fee" value="<?= esc($f['min_fee']??0) ?>" min="0" placeholder="40000">
         </div>
         <div class="form-group">
-          <label><i class="fas fa-rupee-sign"></i> Max Annual Fee (?)</label>
+          <label><i class="fas fa-rupee-sign"></i> Max Annual Fee (â‚¹)</label>
           <input type="number" name="max_fee" value="<?= esc($f['max_fee']??0) ?>" min="0" placeholder="75000">
         </div>
       </div>
@@ -333,11 +333,23 @@ $universities=$pdo->query('SELECT id,name,short_name,type,naac_grade,min_fee,rat
       <div class="panel-header"><i class="fas fa-link"></i> Links & Media</div>
       <div class="panel-body" style="display:flex;flex-direction:column;gap:12px">
         <div class="form-group">
-          <label><i class="fas fa-image"></i> Logo Path / URL</label>
-          <input type="text" name="logo" value="<?= esc($f['logo']??'') ?>" placeholder="/images/university-logos/amity.png">
+          <label><i class="fas fa-image"></i> University Logo</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="file" name="logo_upload" accept="image/png,image/jpeg,image/webp" id="logoUpload" style="flex:1">
+            <button type="button" class="btn btn-outline btn-sm" onclick="uploadLogo()" id="uploadLogoBtn"><i class="fas fa-upload"></i> Upload</button>
+          </div>
+          <input type="hidden" name="logo" id="logoPath" value="<?= esc($f['logo']??'') ?>">
+          <div class="form-hint">Upload a logo or enter URL below</div>
           <?php if(!empty($f['logo'])): ?>
-          <img src="<?= esc($f['logo']) ?>" alt="Logo" style="width:60px;height:60px;object-fit:contain;border-radius:8px;border:1px solid #e2e8f0;padding:4px;margin-top:8px;background:#f8f8f8">
+          <div style="margin-top:8px;display:flex;align-items:center;gap:12px">
+            <img src="<?= esc($f['logo']) ?>" alt="Logo" id="logoPreview" style="width:60px;height:60px;object-fit:contain;border-radius:8px;border:1px solid #e2e8f0;padding:4px;background:#f8f8f8">
+            <span style="font-size:12px;color:#667eea"><?= esc($f['logo']) ?></span>
+          </div>
           <?php endif; ?>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-link"></i> Or Enter Logo URL</label>
+          <input type="text" name="logo_url" id="logoUrlInput" value="<?= esc($f['logo']??'') ?>" placeholder="/images/university-logos/amity.png" onchange="document.getElementById('logoPath').value=this.value">
         </div>
         <div class="form-group">
           <label><i class="fas fa-globe"></i> Website URL</label>
@@ -381,9 +393,9 @@ $universities=$pdo->query('SELECT id,name,short_name,type,naac_grade,min_fee,rat
       <div class="panel-header"><i class="fas fa-chart-bar"></i> Quick Info</div>
       <div class="panel-body">
         <div class="sidebar-stat"><span>ID</span><span class="sidebar-stat-val">#<?= (int)$f['id'] ?></span></div>
-        <div class="sidebar-stat"><span>Rating</span><span class="sidebar-stat-val rating-stars">? <?= number_format((float)$f['rating'],1) ?></span></div>
+        <div class="sidebar-stat"><span>Rating</span><span class="sidebar-stat-val rating-stars">â˜… <?= number_format((float)$f['rating'],1) ?></span></div>
         <div class="sidebar-stat"><span>Reviews</span><span class="sidebar-stat-val"><?= number_format($f['review_count']) ?></span></div>
-        <div class="sidebar-stat"><span>Min Fee</span><span class="sidebar-stat-val">?<?= number_format($f['min_fee']) ?>/yr</span></div>
+        <div class="sidebar-stat"><span>Min Fee</span><span class="sidebar-stat-val">â‚¹<?= number_format($f['min_fee']) ?>/yr</span></div>
         <div class="sidebar-stat">
           <span>Status</span>
           <span><?= $f['active']?'<span class="badge badge-published">Live</span>':'<span class="badge badge-draft">Hidden</span>' ?></span>
@@ -427,7 +439,7 @@ $universities=$pdo->query('SELECT id,name,short_name,type,naac_grade,min_fee,rat
             </div>
           </td>
           <td><span class="badge badge-draft"><?= esc($u['type']) ?></span></td>
-          <td><span class="badge badge-published"><?= esc($u['naac_grade']??'—') ?></span></td>
+          <td><span class="badge badge-published"><?= esc($u['naac_grade']??'ï¿½') ?></span></td>
           <td>?<?= number_format($u['min_fee']) ?></td>
           <td><span class="rating-stars">?</span> <strong><?= number_format((float)$u['rating'],1) ?></strong></td>
           <td><?= $u['active']?'<span class="badge badge-published">Live</span>':'<span class="badge badge-draft">Hidden</span>' ?></td>
@@ -470,6 +482,66 @@ function addCourseRow(){
     <td><input type="text" name="course_specs[]" placeholder="Finance, Marketing, HR"></td>
     <td><button type="button" class="btn-remove-row" onclick="this.closest('tr').remove()"><i class="fas fa-times"></i></button></td>`;
   document.getElementById('coursesBody').appendChild(row);
+}
+async function uploadLogo(){
+  const fileInput=document.getElementById('logoUpload');
+  const uploadBtn=document.getElementById('uploadLogoBtn');
+  const logoPath=document.getElementById('logoPath');
+  const logoUrlInput=document.getElementById('logoUrlInput');
+
+  if(!fileInput.files[0]){
+    alert('Please select a file to upload');
+    return;
+  }
+
+  const formData=new FormData();
+  formData.append('logo_upload',fileInput.files[0]);
+
+  uploadBtn.disabled=true;
+  uploadBtn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+  try{
+    const response=await fetch('/api/upload-university-logo.php',{
+      method:'POST',
+      body:formData
+    });
+    const result=await response.json();
+
+    if(result.success){
+      logoPath.value=result.url;
+      logoUrlInput.value=result.url;
+
+      // Update or create preview
+      let preview=document.getElementById('logoPreview');
+      if(!preview){
+        preview=document.createElement('img');
+        preview.id='logoPreview';
+        preview.style.cssText='width:60px;height:60px;object-fit:contain;border-radius:8px;border:1px solid #e2e8f0;padding:4px;background:#f8f8f8;margin-top:8px';
+        fileInput.parentNode.parentNode.appendChild(preview);
+      }
+      preview.src=result.url;
+
+      // Show the URL
+      let urlSpan=fileInput.parentNode.parentNode.querySelector('span[style*="color:#667eea"]');
+      if(!urlSpan){
+        urlSpan=document.createElement('span');
+        urlSpan.style.cssText='font-size:12px;color:#667eea;margin-left:12px';
+        fileInput.parentNode.parentNode.appendChild(urlSpan);
+      }
+      urlSpan.textContent=result.url;
+
+      uploadBtn.innerHTML='<i class="fas fa-check"></i> Uploaded';
+      setTimeout(()=>uploadBtn.innerHTML='<i class="fas fa-upload"></i> Upload',2000);
+    }else{
+      alert('Upload failed: '+result.error);
+      uploadBtn.innerHTML='<i class="fas fa-upload"></i> Upload';
+    }
+  }catch(error){
+    alert('Upload failed: '+error.message);
+    uploadBtn.innerHTML='<i class="fas fa-upload"></i> Upload';
+  }
+
+  uploadBtn.disabled=false;
 }
 </script>
 </body></html>

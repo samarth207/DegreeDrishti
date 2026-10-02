@@ -20,6 +20,7 @@
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="course-universities.css">
 </head>
 <body>
     <!-- Promo Banner -->
@@ -156,55 +157,21 @@
     <section class="university-comparison">
         <div class="container">
             <div class="comparison-table">
-                <table>
+                <table id="universitiesTable" data-course="Diploma in Digital Marketing">
                     <thead>
                         <tr>
                             <th>University</th>
                             <th>Fees (Total)</th>
                             <th>Duration</th>
-                            <th>Specializations</th>
-                            <th>Certification</th>
+                            <th>Ranking</th>
+                            <th>Average Placement</th>
+                            <th>Degree Approvals</th>
                             <th>Website</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="university-info">
-                                    <img src="../images/university-logos/amity.png" alt="Amity University">
-                                </div>
-                            </td>
-                            <td>₹35,000</td>
-                            <td>1 Year</td>
-                            <td>SEO, SEM, Social Media</td>
-                            <td>Google & Facebook Certified</td>
-                            <td><button onclick="openCounsellingPopup()" class="btn-apply-small">Apply Now</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="university-info">
-                                    <img src="../images/university-logos/manipal.png" alt="Manipal University">
-                                </div>
-                            </td>
-                            <td>₹45,000</td>
-                            <td>1 Year</td>
-                            <td>Content, Analytics, Email</td>
-                            <td>Industry Recognized</td>
-                            <td><button onclick="openCounsellingPopup()" class="btn-apply-small">Apply Now</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="university-info">
-                                    <img src="../images/university-logos/chandigarh.png" alt="Chandigarh University">
-                                </div>
-                            </td>
-                            <td>₹30,000</td>
-                            <td>1 Year</td>
-                            <td>Full Digital Marketing Stack</td>
-                            <td>Globally Recognized</td>
-                            <td><button onclick="openCounsellingPopup()" class="btn-apply-small">Apply Now</button></td>
-                        </tr>
+                        <!-- Universities will be loaded dynamically from API -->
                     </tbody>
                 </table>
             </div>
@@ -339,7 +306,10 @@
         </div>
     </div>
 
-    <script src="../script.js"></script>`n    <script src="../mobile-table-fix.js"></script>`n    <script src="../course-application.js"></script>
+    <script src="../script.js"></script>
+    <script src="../mobile-table-fix.js"></script>
+    <script src="../course-application.js"></script>
+    <script src="course-universities.js"></script>
 </body>
 </html>
 

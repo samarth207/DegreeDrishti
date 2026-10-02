@@ -20,6 +20,7 @@
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="course-universities.css">
 </head>
 <body>
     <!-- Promo Banner -->
@@ -156,11 +157,12 @@
     <section class="university-comparison">
         <div class="container">
             <div class="comparison-table">
-                <table>
+                <table id="universitiesTable" data-course="BBA + MBA">
                     <thead>
                         <tr>
                             <th>University</th>
                             <th>Fees (Total)</th>
+                            <th>Duration</th>
                             <th>Ranking</th>
                             <th>Average Placement</th>
                             <th>Degree Approvals</th>
@@ -169,71 +171,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="university-info">
-                                    <img src="../images/university-logos/amity.png" alt="Amity University">
-                                </div>
-                            </td>
-                            <td>₹5,00,000</td>
-                            <td>NIRF Rank: 45</td>
-                            <td>₹7.0 LPA</td>
-                            <td>UGC, AICTE, NAAC A+</td>
-                            <td data-label="Website"><a href="https://amityonlineuniversity.com/" target="_blank" rel="noopener noreferrer" class="btn-website">Visit Website</a></td>
-                            <td><button onclick="openCounsellingPopup()" class="btn-apply-small">Apply Now</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="university-info">
-                                    <img src="../images/university-logos/manipal.png" alt="Manipal University">
-                                </div>
-                            </td>
-                            <td>₹5,80,000</td>
-                            <td>NIRF Rank: 38</td>
-                            <td>₹8.2 LPA</td>
-                            <td>UGC, AICTE, NAAC A++</td>
-                            <td data-label="Website"><a href="https://manipalonlineadmission.in/" target="_blank" rel="noopener noreferrer" class="btn-website">Visit Website</a></td>
-                            <td><button onclick="openCounsellingPopup()" class="btn-apply-small">Apply Now</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="university-info">
-                                    <img src="../images/university-logos/chandigarh.png" alt="Chandigarh University">
-                                </div>
-                            </td>
-                            <td>₹4,20,000</td>
-                            <td>NIRF Rank: 52</td>
-                            <td>₹6.2 LPA</td>
-                            <td>UGC, AICTE, NAAC A</td>
-                            <td data-label="Website"><a href="https://www.cuchd.in/" target="_blank" rel="noopener noreferrer" class="btn-website">Visit Website</a></td>
-                            <td><button onclick="openCounsellingPopup()" class="btn-apply-small">Apply Now</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="university-info">
-                                    <img src="../images/university-logos/jain.png" alt="Jain University">
-                                </div>
-                            </td>
-                            <td>₹4,60,000</td>
-                            <td>NIRF Rank: 48</td>
-                            <td>₹6.8 LPA</td>
-                            <td>UGC, AICTE, NAAC A+</td>
-                            <td data-label="Website"><a href="https://www.jainuniversity.ac.in/" target="_blank" rel="noopener noreferrer" class="btn-website">Visit Website</a></td>
-                            <td><button onclick="openCounsellingPopup()" class="btn-apply-small">Apply Now</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="university-info">
-                                    <img src="../images/university-logos/lpu.png" alt="LPU Online">
-                                </div>
-                            </td>
-                            <td>₹4,40,000</td>
-                            <td>NIRF Rank: 55</td>
-                            <td>₹6.0 LPA</td>
-                            <td>UGC, AICTE, NAAC A</td>
-                            <td data-label="Website"><a href="https://lpuonlineuniversity.in/" target="_blank" rel="noopener noreferrer" class="btn-website">Visit Website</a></td>
-                            <td><button onclick="openCounsellingPopup()" class="btn-apply-small">Apply Now</button></td>
-                        </tr>
+                        <!-- Universities will be loaded dynamically from API -->
                     </tbody>
                 </table>
             </div>
@@ -347,7 +285,10 @@
         </div>
     </div>
 
-    <script src="../script.js"></script>`n    <script src="../mobile-table-fix.js"></script>`n    <script src="../course-application.js"></script>
+    <script src="../script.js"></script>
+    <script src="../mobile-table-fix.js"></script>
+    <script src="../course-application.js"></script>
+    <script src="course-universities.js"></script>
 </body>
 </html>
 
