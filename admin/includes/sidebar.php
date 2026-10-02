@@ -41,6 +41,14 @@ $admin = getCurrentAdmin();
       <i class="fas fa-balance-scale"></i> Compare Page
     </a>
 
+    <div class="nav-section-title">Counselors</div>
+    <a href="/admin/counselors.php" class="<?= $currentPage === 'counselors.php' && empty($_GET['edit']) && empty($_GET['add']) ? 'active' : '' ?>">
+      <i class="fas fa-list"></i> All Counselors
+    </a>
+    <a href="/admin/counselors.php?add=1" class="<?= $currentPage === 'counselors.php' && isset($_GET['add']) ? 'active' : '' ?>">
+      <i class="fas fa-plus-circle"></i> Add Counselor
+    </a>
+
     <div class="nav-section-title">Website</div>
     <a href="/" target="_blank">
       <i class="fas fa-globe"></i> View Website

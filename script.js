@@ -2,6 +2,62 @@
 let currentSlideIndex = 1;
 let autoSlideInterval;
 
+// ================================
+// Load Counselors Dynamically
+// ================================
+async function loadCounselors() {
+    const counselorsGrid = document.querySelector('.counselors-grid');
+    if (!counselorsGrid) return;
+
+    try {
+        const response = await fetch('/api/get-counselors.php');
+        const result = await response.json();
+
+        if (result.success && result.data.length > 0) {
+            // Generate counselor cards
+            const cardsHTML = result.data.map(counselor => `
+                <div class="counselor-card">
+                    <div class="counselor-img-wrap">
+                        <img src="${counselor.image || '/images/counselor-placeholder.jpg'}" alt="${counselor.image_alt || counselor.name}">
+                    </div>
+                    <div class="counselor-info">
+                        <h3>${counselor.name}</h3>
+                        <p class="qualification">${counselor.qualification || ''}</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <span class="stat-number">${counselor.students_counselled || '0+'}</span>
+                                <span class="stat-label">Students Counselled</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">${counselor.experience_years || '0 Years'}</span>
+                                <span class="stat-label">Experience</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Duplicate cards for seamless looping animation
+            counselorsGrid.innerHTML = cardsHTML + cardsHTML;
+
+            // Re-initialize observer for new elements
+            const animatedElements = document.querySelectorAll('.counselor-card');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        } else {
+            // Show fallback message if no counselors
+            counselorsGrid.innerHTML = '<p style="text-align:center;color:#9ca3af;padding:40px;">No counselors available at the moment.</p>';
+        }
+    } catch (error) {
+        console.error('Failed to load counselors:', error);
+        // Keep existing hardcoded counselors as fallback
+    }
+}
+
 // Promo Banner Dismiss
 function dismissBanner() {
     const banner = document.getElementById('promoBanner');
@@ -544,6 +600,9 @@ const observer = new IntersectionObserver(function(entries) {
 
 // Observe elements for animation
 document.addEventListener('DOMContentLoaded', function() {
+    // Load counselors dynamically
+    loadCounselors();
+
     const animatedElements = document.querySelectorAll('.course-card, .counselor-card, .partner-logo');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
