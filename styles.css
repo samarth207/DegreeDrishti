@@ -64,6 +64,55 @@ body {
     overflow: hidden;
 }
 
+/* Mobile responsive for promo banner */
+@media (max-width: 768px) {
+    .promo-banner {
+        padding: 0 15px 0 10px;
+        font-size: 11px;
+        height: auto;
+        min-height: 38px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        overflow: hidden;
+    }
+
+    .promo-banner .banner-inner {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 8px;
+        width: max-content;
+        animation: scrollText 20s linear infinite;
+    }
+
+    .promo-banner .banner-text {
+        white-space: nowrap;
+    }
+
+    .promo-banner .banner-cta {
+        flex-shrink: 0;
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+
+    .promo-banner .banner-badge {
+        flex-shrink: 0;
+        padding: 2px 8px;
+        font-size: 10px;
+    }
+
+    .promo-banner .banner-close {
+        right: 8px;
+        width: 20px;
+        height: 20px;
+        font-size: 13px;
+    }
+}
+
+@keyframes scrollText {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 @keyframes bannerShine {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
@@ -153,6 +202,17 @@ body {
     right: 0;
     z-index: 1000;
     transition: top 0.3s ease;
+}
+
+/* Adjust navbar for mobile banner */
+@media (max-width: 768px) {
+    .navbar {
+        top: 54px;
+    }
+
+    .hero-section {
+        margin-top: 110px;
+    }
 }
 
 .navbar .container {

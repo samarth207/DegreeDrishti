@@ -19,13 +19,27 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 
     if (in_array($act,['create','update'])) {
         $p=$_POST; $id=(int)($p['id']??0);
+        
+        // Handle image upload if file was submitted
+        $imagePath = trim($p['image']??'');
+        if (!empty($_FILES['image_upload']['name'])) {
+            $uploadResult = handleCounselorImageUpload('image_upload');
+            if ($uploadResult['success']) {
+                $imagePath = $uploadResult['url'];
+            } else {
+                setFlash('danger', 'Image upload failed: ' . $uploadResult['error']);
+                header('Location: /admin/counselors.php' . ($id>0?'?edit='.$id:'?add=1'));
+                exit;
+            }
+        }
+        
         $data=[
             'name'=>trim($p['name']??''),
             'qualification'=>trim($p['qualification']??''),
             'students_counselled'=>trim($p['students_counselled']??''),
             'experience_years'=>trim($p['experience_years']??''),
             'bio'=>trim($p['bio']??''),
-            'image'=>trim($p['image']??''),
+            'image'=>$imagePath,
             'image_alt'=>trim($p['image_alt']??''),
             'active'=>!empty($p['active'])?1:0,
             'sort_order'=>(int)($p['sort_order']??0)
@@ -53,6 +67,32 @@ if(isset($_GET['edit'])){
     $editRow=$s2->fetch()?:null;
 }
 $counselors=$pdo->query('SELECT id,name,qualification,students_counselled,experience_years,active,sort_order FROM counselors ORDER BY sort_order ASC,id ASC')->fetchAll();
+
+// Image upload helper function
+function handleCounselorImageUpload(string $fileKey): array {
+    $file = $_FILES[$fileKey] ?? null;
+    if (!$file || $file['error'] !== UPLOAD_ERR_OK) {
+        return ['success' => false, 'error' => 'Upload failed.'];
+    }
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime  = $finfo->file($file['tmp_name']);
+    if (!in_array($mime, $allowedTypes)) {
+        return ['success' => false, 'error' => 'Only JPG, PNG, WebP allowed.'];
+    }
+    if ($file['size'] > 5 * 1024 * 1024) {
+        return ['success' => false, 'error' => 'Max file size is 5 MB.'];
+    }
+    $ext      = ['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp'][$mime];
+    $filename = 'counselor-' . uniqid() . '.' . $ext;
+    $uploadDir = SITE_ROOT . '/images/counselors/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+    $destPath = $uploadDir . $filename;
+    if (!move_uploaded_file($file['tmp_name'], $destPath)) {
+        return ['success' => false, 'error' => 'Could not save file.'];
+    }
+    return ['success' => true, 'url' => '/images/counselors/' . $filename];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +158,7 @@ $counselors=$pdo->query('SELECT id,name,qualification,students_counselled,experi
   <h2 style="font-size:18px;font-weight:700;color:#2C3E50"><?= $isEdit?'Edit: '.esc($f['name']):'Add New Counselor' ?></h2>
 </div>
 
-<form method="POST" action="/admin/counselors.php" id="counselorForm">
+<form method="POST" action="/admin/counselors.php" id="counselorForm" enctype="multipart/form-data">
 <input type="hidden" name="_csrf" value="<?= esc($csrf) ?>">
 <input type="hidden" name="_action" value="<?= $isEdit?'update':'create' ?>">
 <?php if($isEdit): ?><input type="hidden" name="id" value="<?= (int)$f['id'] ?>"><?php endif; ?>
@@ -199,6 +239,16 @@ $counselors=$pdo->query('SELECT id,name,qualification,students_counselled,experi
     <div class="editor-panel">
       <div class="panel-header"><i class="fas fa-image"></i> Profile Image</div>
       <div class="panel-body" style="display:flex;flex-direction:column;gap:12px">
+        <div class="form-group">
+          <label><i class="fas fa-upload"></i> Upload Image</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="file" name="image_upload" accept="image/jpeg,image/png,image/webp" id="counselorImageUpload" style="flex:1">
+            <button type="button" class="btn btn-outline btn-sm" onclick="uploadCounselorImage()" id="uploadCounselorBtn">
+              <i class="fas fa-upload"></i> Upload
+            </button>
+          </div>
+          <div class="form-hint">JPG, PNG, WebP (max 5MB)</div>
+        </div>
         <div class="form-group">
           <label><i class="fas fa-link"></i> Image URL</label>
           <input type="text" name="image" id="imagePath" value="<?= esc($f['image']??'') ?>" placeholder="/images/counselors/photo.jpg">
@@ -283,5 +333,59 @@ $counselors=$pdo->query('SELECT id,name,qualification,students_counselled,experi
   </div><!-- /main-content -->
 </div>
 <script src="/admin/assets/admin.js"></script>
+<script>
+function uploadCounselorImage() {
+    const fileInput = document.getElementById('counselorImageUpload');
+    const uploadBtn = document.getElementById('uploadCounselorBtn');
+    const imagePath = document.getElementById('imagePath');
+    const imagePreview = document.getElementById('imagePreview');
+
+    if (!fileInput.files || !fileInput.files[0]) {
+        alert('Please select a file to upload.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', fileInput.files[0]);
+
+    uploadBtn.disabled = true;
+    uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+    fetch('/api/upload-counselor-image.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            imagePath.value = data.url;
+            imagePreview.src = data.url;
+            imagePreview.classList.add('show');
+            fileInput.value = '';
+            alert('Image uploaded successfully!');
+        } else {
+            alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        alert('Upload failed: ' + error.message);
+    })
+    .finally(() => {
+        uploadBtn.disabled = false;
+        uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+    });
+}
+
+// Update preview when URL changes manually
+document.getElementById('imagePath').addEventListener('change', function() {
+    const preview = document.getElementById('imagePreview');
+    if (this.value) {
+        preview.src = this.value;
+        preview.classList.add('show');
+    } else {
+        preview.classList.remove('show');
+    }
+});
+</script>
 </body>
 </html>

@@ -62,9 +62,11 @@ async function loadCounselors() {
 function dismissBanner() {
     const banner = document.getElementById('promoBanner');
     const navbar = document.querySelector('.navbar');
+    const heroSection = document.querySelector('.hero-section');
     if (banner) {
         banner.style.display = 'none';
         if (navbar) navbar.style.top = '0';
+        if (heroSection) heroSection.style.marginTop = '56px';
     }
 }
 

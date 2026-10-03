@@ -28,11 +28,11 @@ CREATE TABLE IF NOT EXISTS `counselors` (
 -- =====================================================
 
 INSERT INTO `counselors` (`name`, `qualification`, `students_counselled`, `experience_years`, `image`, `image_alt`, `active`, `sort_order`) VALUES
-('Mr. Vidya Sagar', 'MBA, Career Counselor', '1500+', '5 Years', 'images/counselor2.jpeg', 'Mr. Vidya Sagar - Career Counselor', 1, 1),
-('Md Faiz', 'M.Ed, Educational Consultant', '4200+', '6 Years', 'images/counselor6.png', 'Md Faiz - Educational Consultant', 1, 2),
-('Mr. Mohit Gupta', 'MBA, Career Counselor', '4000+', '6 Years', 'images/counselor4.jpeg', 'Mr. Mohit Gupta - Career Counselor', 1, 3),
-('Mr. Kunal Chauhan', 'Academic Advisor', '1500+', '5.5 Years', 'images/counselor7.jpeg', 'Mr. Kunal Chauhan - Academic Advisor', 1, 4),
-('Mr. Divyanshu Kashyap', 'Career Counselor', '1600+', '4.5 Years', 'images/counselor8.jpeg', 'Mr. Divyanshu Kashyap - Career Counselor', 1, 5);
+('Mr. Vidya Sagar', 'MBA, Career Counselor', '1500+', '5 Years', '/images/counselor2.jpeg', 'Mr. Vidya Sagar - Career Counselor', 1, 1),
+('Md Faiz', 'M.Ed, Educational Consultant', '4200+', '6 Years', '/images/counselor6.png', 'Md Faiz - Educational Consultant', 1, 2),
+('Mr. Mohit Gupta', 'MBA, Career Counselor', '4000+', '6 Years', '/images/counselor4.jpeg', 'Mr. Mohit Gupta - Career Counselor', 1, 3),
+('Mr. Kunal Chauhan', 'Academic Advisor', '1500+', '5.5 Years', '/images/counselor7.jpeg', 'Mr. Kunal Chauhan - Academic Advisor', 1, 4),
+('Mr. Divyanshu Kashyap', 'Career Counselor', '1600+', '4.5 Years', '/images/counselor8.jpeg', 'Mr. Divyanshu Kashyap - Career Counselor', 1, 5);
 
 -- =====================================================
 -- Useful Queries

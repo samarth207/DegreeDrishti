@@ -337,7 +337,7 @@ $primaryCat  = $categories ? explode(',', $categories)[0] : '';
 
     /* Feature image */
     article figure { margin: 0; padding: 0; }
-    .blog-feature-img { width:100%; max-height:480px; object-fit:cover; border-radius:14px; margin-bottom:24px; }
+    .blog-feature-img { width:100%; max-height:480px; object-fit:cover; border-radius:14px; margin-bottom:16px; }
 
     /* Post meta bar */
     .post-meta { display:flex; flex-wrap:wrap; align-items:center; gap:16px; margin-bottom:24px; font-size:13px; color:#6b7280; }
